@@ -103,6 +103,14 @@ class Strawberry
     "#{@amount}S"
   end
 
+  def get_x_location
+    @x_location
+  end
+
+  def get_y_location
+    @y_location
+  end
+
   def increment
     @amount += 1
   end
@@ -121,6 +129,14 @@ class Mushroom
 
   def get_representation
     "#{@amount}M"
+  end
+
+  def get_x_location
+    @x_location
+  end
+
+  def get_y_location
+    @y_location
   end
 
   def increment
