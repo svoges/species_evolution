@@ -34,7 +34,10 @@ mushroom_array    = Array.new(total_length){ 0 }
 creature_array    = Array.new(total_length){ 0 }
 monster_array     = Array.new(total_length){ 0 }
 
-
+all_creatures    = Array.new
+all_monsters     = Array.new
+all_mushrooms    = Array.new
+all_strawberries = Array.new
 
 # Create creatures. population could be done better
 (0..2).each do |creature|
