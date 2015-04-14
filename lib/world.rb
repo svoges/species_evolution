@@ -1,7 +1,6 @@
 require_relative 'matrix.rb'
 
 class World
-
   def initialize(x_size, y_size)
     @x_size = x_size
     @y_size = y_size
@@ -11,6 +10,13 @@ class World
     @all_monsters     = Array.new
     @all_mushrooms    = Array.new
     @all_strawberries = Array.new
+  end
+
+  def initialize_world
+    (0..2).each { add_creature }
+    (0..2).each { add_monster }
+    (0..1).each { add_strawberry }
+    (0..1).each { add_mushroom }
   end
 
   def get_coords_used
@@ -26,8 +32,6 @@ class World
       if curr_world[Matrix.two_to_one(x_coord, y_coord, @x_size)].nil?
         @coords_used.push([x_coord, y_coord])
         good_coords = true
-      else
-        puts "BAD COORDS #{x_coord} #{y_coord}"
       end
     end
     [x_coord, y_coord]

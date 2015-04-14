@@ -67,8 +67,8 @@ end
 
 class Monster
   def initialize(x, y)
-    @x_location = rand(x)
-    @y_location = rand(y)
+    @x_location = x
+    @y_location = y
   end
 
   def get_representation
@@ -94,8 +94,8 @@ end
 
 class Strawberry
   def initialize(x, y)
-    @x_location = rand(x)
-    @y_location = rand(y)
+    @x_location = x
+    @y_location = y
     @amount = 1
   end
 
@@ -122,8 +122,8 @@ end
 
 class Mushroom
   def initialize(x, y)
-    @x_location = rand(x)
-    @y_location = rand(y)
+    @x_location = x
+    @y_location = y
     @amount = 1
   end
 
