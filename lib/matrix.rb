@@ -17,7 +17,7 @@ module Matrix
   # Draw a line based on a given matrix
   def Matrix.draw_line(array)
     array.each do |elem|
-      if [Monster, Creature].include?(elem.class)
+      if [Monster, Creature, Strawberry, Mushroom].include?(elem.class)
         print elem.get_representation
       else
         print elem
@@ -52,6 +52,4 @@ module Matrix
   def Matrix.two_to_one(x_coord, y_coord, x_size)
     x_size * y_coord + x_coord
   end
-
-  def Matrix.combine_matrices(creature, monster, mushroom, strawberry)
 end

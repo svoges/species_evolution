@@ -62,7 +62,9 @@ end
   x_coord = coord[0]
   y_coord = coord[1]
 
-  strawberry_array[Matrix.two_to_one(x_coord, y_coord, $x_size)] += 1
+  new_strawberry = Strawberry.new(x_coord, y_coord)
+  all_strawberries.push(new_strawberry)
+  strawberry_array[Matrix.two_to_one(x_coord, y_coord, $x_size)] = new_strawberry
 end
 
 (0..1).each do |mushroom|
@@ -70,7 +72,9 @@ end
   x_coord = coord[0]
   y_coord = coord[1]
 
-  mushroom_array[Matrix.two_to_one(x_coord, y_coord, $x_size)] += 1
+  new_mushroom = Mushroom.new(x_coord, y_coord)
+  all_mushrooms.push(new_mushroom)
+  mushroom_array[Matrix.two_to_one(x_coord, y_coord, $x_size)] = new_mushroom
 
 end
 

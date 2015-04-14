@@ -5,15 +5,15 @@ class Creature
     @energy_level = 10
   end
 
-  def get_representation()
+  def get_representation
     "C"
   end
 
-  def get_x_location()
+  def get_x_location
     @x_location
   end
 
-  def get_y_location()
+  def get_y_location
     @y_location
   end
 
@@ -25,7 +25,7 @@ class Creature
     @y_location = location
   end
 
-  def move_random()
+  def move_random
     movement = rand(4)
     if movement == 0
       move_south()
@@ -38,19 +38,19 @@ class Creature
     end
   end
 
-  def move_north()
+  def move_north
     @y_location += 1
   end
 
-  def move_south()
+  def move_south
     @y_location -= 1
   end
 
-  def move_east()
+  def move_east
     @x_location += 1
   end
 
-  def move_west()
+  def move_west
     @x_location -= 1
   end
 
@@ -71,15 +71,15 @@ class Monster
     @y_location = rand(y)
   end
 
-  def get_representation()
+  def get_representation
     "M"
   end
 
-  def get_x_location()
+  def get_x_location
     @x_location
   end
 
-  def get_y_location()
+  def get_y_location
     @y_location
   end
 
@@ -89,5 +89,45 @@ class Monster
 
   def set_y_location(location)
     @y_location = location
+  end
+end
+
+class Strawberry
+  def initialize(x, y)
+    @x_location = rand(x)
+    @y_location = rand(y)
+    @amount = 1
+  end
+
+  def get_representation
+    "#{@amount}S"
+  end
+
+  def increment
+    @amount += 1
+  end
+
+  def decrement
+    @amount -= 1
+  end
+end
+
+class Mushroom
+  def initialize(x, y)
+    @x_location = rand(x)
+    @y_location = rand(y)
+    @amount = 1
+  end
+
+  def get_representation
+    "#{@amount}M"
+  end
+
+  def increment
+    @amount += 1
+  end
+
+  def decrement
+    @amount -= 1
   end
 end
