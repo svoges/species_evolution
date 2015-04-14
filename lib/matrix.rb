@@ -18,9 +18,16 @@ module Matrix
   def Matrix.draw_line(array)
     array.each do |elem|
       if [Monster, Creature, Strawberry, Mushroom].include?(elem.class)
-        print elem.get_representation
+        repr = elem.get_representation
+        if repr.length == 1
+          print " #{repr} "
+        elsif repr.length == 2
+          print " #{repr}"
+        else
+          print "#{repr}"
+        end
       else
-        print elem
+        print " #{elem} "
       end
       print " "
     end
@@ -30,9 +37,9 @@ module Matrix
   # Draw a 1-D matrix in 2-D
   def Matrix.draw_matrix(array, x_size, y_size)
     print "    "
-    (0..x_size-1).each { |i| print "#{i} "}
+    (0..x_size-1).each { |i| print " #{ i }  "}
     print "\n    "
-    (0..x_size-1).each { |i| print "- "}
+    (0..x_size-1).each { |i| print " -  "}
     puts ""
     counter = 0
     copied_array = Array.new(array)

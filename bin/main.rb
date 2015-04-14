@@ -29,11 +29,6 @@ end
 # Create $x_size by $y_size arrays for storage of different objects
 world_array = Array.new(total_length){ 0 }
 
-strawberry_array  = Array.new(total_length){ 0 }
-mushroom_array    = Array.new(total_length){ 0 }
-creature_array    = Array.new(total_length){ 0 }
-monster_array     = Array.new(total_length){ 0 }
-
 all_creatures    = Array.new
 all_monsters     = Array.new
 all_mushrooms    = Array.new
@@ -47,7 +42,7 @@ all_strawberries = Array.new
 
   new_creature = Creature.new(x_coord, y_coord)
   all_creatures.push(new_creature)
-  creature_array[Matrix.two_to_one(x_coord, y_coord, $x_size)] = new_creature
+  world_array[Matrix.two_to_one(x_coord, y_coord, $x_size)] = new_creature
 end
 
 (0..2).each do |monster|
@@ -57,7 +52,7 @@ end
 
   new_monster = Monster.new(x_coord, y_coord)
   all_monsters.push(new_monster)
-  monster_array[Matrix.two_to_one(x_coord, y_coord, $x_size)] = new_monster
+  world_array[Matrix.two_to_one(x_coord, y_coord, $x_size)] = new_monster
 end
 
 (0..1).each do |strawberry|
@@ -67,7 +62,7 @@ end
 
   new_strawberry = Strawberry.new(x_coord, y_coord)
   all_strawberries.push(new_strawberry)
-  strawberry_array[Matrix.two_to_one(x_coord, y_coord, $x_size)] = new_strawberry
+  world_array[Matrix.two_to_one(x_coord, y_coord, $x_size)] = new_strawberry
 end
 
 (0..1).each do |mushroom|
@@ -77,11 +72,8 @@ end
 
   new_mushroom = Mushroom.new(x_coord, y_coord)
   all_mushrooms.push(new_mushroom)
-  mushroom_array[Matrix.two_to_one(x_coord, y_coord, $x_size)] = new_mushroom
+  world_array[Matrix.two_to_one(x_coord, y_coord, $x_size)] = new_mushroom
 
 end
 
-Matrix.draw_matrix(strawberry_array, $x_size, $y_size)
-Matrix.draw_matrix(mushroom_array, $x_size, $y_size)
-Matrix.draw_matrix(monster_array, $x_size, $y_size)
-Matrix.draw_matrix(creature_array, $x_size, $y_size)
+Matrix.draw_matrix(world_array, $x_size, $y_size)
