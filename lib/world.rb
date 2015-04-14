@@ -13,14 +13,21 @@ class World
     @all_strawberries = Array.new
   end
 
+  def get_coords_used
+    @coords_used
+  end
+
   def get_coords
     good_coords = false
+    curr_world = get_world_array
     while !good_coords
       x_coord = rand(@x_size)
       y_coord = rand(@y_size)
-      if !@coords_used.include?([x_coord, y_coord])
+      if curr_world[Matrix.two_to_one(x_coord, y_coord, @x_size)].nil?
         @coords_used.push([x_coord, y_coord])
         good_coords = true
+      else
+        puts "BAD COORDS #{x_coord} #{y_coord}"
       end
     end
     [x_coord, y_coord]
@@ -76,11 +83,31 @@ class World
   end
 
   def add_mushroom
+    get_coords_used
     coord = get_coords()
     x_coord = coord[0]
     y_coord = coord[1]
 
     new_mushroom = Mushroom.new(x_coord, y_coord)
     @all_mushrooms.push(new_mushroom)
+  end
+
+  def display_coordinates
+    puts "CREATURES"
+    @all_creatures.each do |creature|
+      puts "X: #{creature.get_x_location} \nY: #{creature.get_y_location}\n"
+    end
+    puts "MONSTERS"
+    @all_monsters.each do |monster|
+      puts "X: #{monster.get_x_location} \nY: #{monster.get_y_location}\n"
+    end
+    puts "STRAWBERRIES"
+    @all_strawberries.each do |strawberry|
+      puts "X: #{strawberry.get_x_location} \nY: #{strawberry.get_y_location}\n"
+    end
+    puts "MUSHROOMS"
+    @all_mushrooms.each do |mushroom|
+      puts "X: #{mushroom.get_x_location} \nY: #{mushroom.get_y_location}\n"
+    end
   end
 end
