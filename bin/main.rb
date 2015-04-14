@@ -38,7 +38,6 @@ def create_world_array(creatures, monsters, mushrooms, strawberries)
   creatures.each do |creature|
     world_array[Matrix.two_to_one(creature.get_x_location, creature.get_y_location, $x_size)] = creature
   end
-  print world_array
   monsters.each do |monster|
     world_array[Matrix.two_to_one(monster.get_x_location, monster.get_y_location, $x_size)] = monster
   end
