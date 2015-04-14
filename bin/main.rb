@@ -73,7 +73,6 @@ end
   new_mushroom = Mushroom.new(x_coord, y_coord)
   all_mushrooms.push(new_mushroom)
   world_array[Matrix.two_to_one(x_coord, y_coord, $x_size)] = new_mushroom
-
 end
 
 Matrix.draw_matrix(world_array, $x_size, $y_size)

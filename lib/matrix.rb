@@ -27,7 +27,7 @@ module Matrix
           print "#{repr}"
         end
       else
-        print " #{elem} "
+        print " - "
       end
       print " "
     end
