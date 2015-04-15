@@ -35,7 +35,13 @@ class World
                 @all_strawberries.delete(object)
               end
             elsif object.class == Mushroom
+              @all_persons.delete(person)
+              object.decrement
+              if object.get_amount <= 0
+                @all_mushrooms.delete(object)
+              end
             elsif object.class == Monster
+              @all_persons.delete(person)
             else
               puts 'UNIDENTIFIED PERSON OBJECT'
               exit
@@ -160,6 +166,11 @@ class World
     x_coord = coord[0]
     y_coord = coord[1]
 
+    new_mushroom = Mushroom.new(x_coord, y_coord)
+    @all_mushrooms.push(new_mushroom)
+  end
+
+  def add_mushroom_coordinate(x_coord, y_coord)
     new_mushroom = Mushroom.new(x_coord, y_coord)
     @all_mushrooms.push(new_mushroom)
   end
