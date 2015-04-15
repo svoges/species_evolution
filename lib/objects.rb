@@ -101,22 +101,6 @@ class Creature
       exit
     end
   end
-end
-
-
-class Person < Creature
-  def initialize(x, y, x_size, y_size)
-    @x_location = x
-    @y_location = y
-    @x_size = x_size
-    @y_size = y_size
-    @total_length = x_size * y_size
-    @energy_level = 10
-  end
-
-  def get_representation
-    'P'
-  end
 
   def move_random
     good_movement = false
@@ -140,11 +124,85 @@ class Person < Creature
       end
     end
   end
+end
 
-  def eat()
+
+class Person < Creature
+  def initialize(x, y, x_size, y_size)
+    @x_location = x
+    @y_location = y
+    @x_size = x_size
+    @y_size = y_size
+    @total_length = x_size * y_size
+    @energy_level = 10
   end
 
-  def strawberry_present
+  def get_representation
+    'P'
+  end
+
+  def move_north
+    if can_move_north
+      @y_location -= 1
+    else
+      puts 'ERROR: Person illegally moved north'
+      exit
+    end
+  end
+
+  def move_south
+    if can_move_south
+      @y_location += 1
+    else
+      puts 'ERROR: Person illegally moved south'
+      exit
+    end
+  end
+
+  def move_east
+    if can_move_east
+      @x_location += 1
+    else
+      puts 'ERROR: Person illegally moved east'
+      exit
+    end
+  end
+
+  def move_west
+    if can_move_west
+      @x_location -= 1
+    else
+      puts 'ERROR: Person illegally moved west'
+      exit
+    end
+  end
+
+  def eat()
+    @energy_level += 2
+  end
+
+  def move_random
+    good_movement = false
+    while !good_movement
+      movement = rand(4)
+      good_movement = true
+      if movement == 0 and can_move_south
+        puts "SOUTH"
+        move_south()
+      elsif movement == 1 and can_move_west
+        puts "WEST"
+        move_west()
+      elsif movement == 2 and can_move_north
+        puts "NORTH"
+        move_north()
+      elsif movement == 3 and can_move_east
+        puts "EAST"
+        move_east()
+      else
+        good_movement = false
+      end
+    end
+    @energy_level -= 1
   end
 
   def nearest_strawberry
@@ -167,6 +225,10 @@ class Food
     @x_location = x
     @y_location = y
     @amount = 1
+  end
+
+  def get_amount
+    @amount
   end
 
   def get_x_location

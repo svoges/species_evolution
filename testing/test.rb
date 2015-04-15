@@ -96,13 +96,12 @@ end
 def random_person_movement
   world = World.new(5, 5)
   world.add_person
+  world.display_world
   iterations = 10
   while iterations > 0
-    world.display_world
     world.do_iteration
     iterations -= 1
   end
-  world.display_world
 end
 
 def movement_tests
@@ -113,14 +112,48 @@ def movement_tests
   ok_person_movement
 end
 
+def get_object
+  world = World.new(5, 5)
+  world.add_strawberry_coordinate(3, 3)
+  assert(world.get_object_at_coord(3, 3).class == Strawberry, "objects indexed incorrectly")
+  assert(world.get_object_at_coord(3, 4).nil? == true, "objects indexed incorrectly")
+end
+
+def eat_strawberry
+  world = World.new(2, 1)
+  world.add_person_coordinate(0, 0)
+  world.add_strawberry_coordinate(1, 0)
+  world.display_world
+  assert(world.get_objects_at_coord(0, 0)[0].class == Person, "objects indexed incorrectly")
+  assert(world.get_objects_at_coord(1, 0)[0].class == Strawberry, "objects indexed incorrectly")
+  world.do_iteration
+  world.do_iteration
+  assert(world.get_strawberries.empty? == true, "Strawberry wasn't removed")
+end
+
+def test_world
+  world = World.new(5, 5)
+  world.initialize_world
+end
+
+def test_best_object
+  world = World.new(1, 1)
+  world.add_strawberry_coordinate(0, 0)
+  world.add_person_coordinate(0, 0)
+  world.display_world
+end
 
 def run_tests
+  # test_world
+  # test_best_object
   # test_person_creation
   # test_line
   # test_matrix
   # get_person_test
   # movement_tests
-  random_person_movement
+  # random_person_movement
+  # get_object
+  eat_strawberry
 end
 
 run_tests
