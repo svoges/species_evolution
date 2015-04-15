@@ -1,4 +1,4 @@
-class Creature
+class Person
   def initialize(x, y, x_size, y_size)
     @x_location = x
     @y_location = y
@@ -9,7 +9,7 @@ class Creature
   end
 
   def get_representation
-    'C'
+    'P'
   end
 
   def get_single_coord
@@ -98,7 +98,7 @@ class Creature
     if can_move_north
       @y_location -= 1
     else
-      puts 'ERROR: Creature illegally moved north'
+      puts 'ERROR: Person illegally moved north'
       exit
     end
   end
@@ -107,7 +107,7 @@ class Creature
     if can_move_south
       @y_location += 1
     else
-      puts 'ERROR: Creature illegally moved south'
+      puts 'ERROR: Person illegally moved south'
       exit
     end
   end
@@ -116,7 +116,7 @@ class Creature
     if can_move_east
       @x_location += 1
     else
-      puts 'ERROR: Creature illegally moved east'
+      puts 'ERROR: Person illegally moved east'
       exit
     end
   end
@@ -125,7 +125,7 @@ class Creature
     if can_move_west
       @x_location -= 1
     else
-      puts 'ERROR: Creature illegally moved west'
+      puts 'ERROR: Person illegally moved west'
       exit
     end
 

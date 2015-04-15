@@ -5,12 +5,12 @@ require 'test/unit'
 include Test::Unit::Assertions
 
 
-def test_creature_creation
-  puts "TESTS CREATURE CREATION"
+def test_person_creation
+  puts "TESTS PERSON CREATION"
   (1..10).each do |i|
-    creature = Creature.new(9, 9)
-    assert(creature.get_x_location() < 10, "creature #{i} has incorrect x location")
-    assert(creature.get_y_location() < 10, "creature #{i} has incorrect y location")
+    person = Person.new(9, 9)
+    assert(person.get_x_location() < 10, "person #{i} has incorrect x location")
+    assert(person.get_y_location() < 10, "person #{i} has incorrect y location")
   end
 end
 
@@ -40,62 +40,62 @@ def test_matrix
   Matrix.draw_matrix(array, 3, 3)
 end
 
-def get_creature_test
+def get_person_test
   world = World.new(5, 5)
-  world.add_creature_coordinate(3, 3)
-  assert(world.get_creature(3, 3) != nil, "could not find creature")
-  assert(world.get_creature(1, 1).nil?  , "should be nil")
+  world.add_person_coordinate(3, 3)
+  assert(world.get_person(3, 3) != nil, "could not find person")
+  assert(world.get_person(1, 1).nil?  , "should be nil")
 end
 
-def creature_movement_north
+def person_movement_north
   puts 'NORTH'
   world = World.new(5, 5)
   world.display_world
-  world.add_creature_coordinate(2, 0)
+  world.add_person_coordinate(2, 0)
   world.display_world
-  assert(world.get_creature(2, 0).can_move_north == false, "creature should not be able to move NORTH")
+  assert(world.get_person(2, 0).can_move_north == false, "person should not be able to move NORTH")
 end
 
-def creature_movement_west
+def person_movement_west
   puts 'WEST'
   world = World.new(5, 5)
   world.display_world
-  world.add_creature_coordinate(0, 2)
+  world.add_person_coordinate(0, 2)
   world.display_world
-  assert(world.get_creature(0, 2).can_move_west == false, "creature should not be able to move WEST")
+  assert(world.get_person(0, 2).can_move_west == false, "person should not be able to move WEST")
 end
 
-def creature_movement_south
+def person_movement_south
   puts 'SOUTH'
   world = World.new(5, 5)
   world.display_world
-  world.add_creature_coordinate(2, 4)
+  world.add_person_coordinate(2, 4)
   world.display_world
-  assert(world.get_creature(2, 4).can_move_south == false, "creature should not be able to move SOUTH")
+  assert(world.get_person(2, 4).can_move_south == false, "person should not be able to move SOUTH")
 end
 
-def creature_movement_east
+def person_movement_east
   puts 'EAST'
   world = World.new(5, 5)
   world.display_world
-  world.add_creature_coordinate(4, 2)
+  world.add_person_coordinate(4, 2)
   world.display_world
-  assert(world.get_creature(4, 2).can_move_east == false, "creature should not be able to move EAST")
+  assert(world.get_person(4, 2).can_move_east == false, "person should not be able to move EAST")
 end
 
-def ok_creature_movement
+def ok_person_movement
   world = World.new(5, 5)
-  world.add_creature_coordinate(2, 2)
+  world.add_person_coordinate(2, 2)
   world.display_world
-  assert(world.get_creature(2,2).can_move_north == true, "creature should be able to move NORTH")
-  assert(world.get_creature(2,2).can_move_south == true, "creature should be able to move SOUTH")
-  assert(world.get_creature(2,2).can_move_east == true, "creature should be able to move EAST")
-  assert(world.get_creature(2,2).can_move_west == true, "creature should be able to move WEST")
+  assert(world.get_person(2,2).can_move_north == true, "person should be able to move NORTH")
+  assert(world.get_person(2,2).can_move_south == true, "person should be able to move SOUTH")
+  assert(world.get_person(2,2).can_move_east == true, "person should be able to move EAST")
+  assert(world.get_person(2,2).can_move_west == true, "person should be able to move WEST")
 end
 
-def random_creature_movement
+def random_person_movement
   world = World.new(5, 5)
-  world.add_creature
+  world.add_person
   iterations = 10
   while iterations > 0
     world.display_world
@@ -106,21 +106,21 @@ def random_creature_movement
 end
 
 def movement_tests
-  creature_movement_north
-  creature_movement_south
-  creature_movement_west
-  creature_movement_east
-  ok_creature_movement
+  person_movement_north
+  person_movement_south
+  person_movement_west
+  person_movement_east
+  ok_person_movement
 end
 
 
 def run_tests
-  # test_creature_creation
+  # test_person_creation
   # test_line
   # test_matrix
-  # get_creature_test
+  # get_person_test
   # movement_tests
-  random_creature_movement
+  random_person_movement
 end
 
 run_tests

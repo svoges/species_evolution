@@ -6,24 +6,24 @@ class World
     @y_size = y_size
     @total_length = x_size * y_size
     @coords_used = []
-    @all_creatures    = Array.new
+    @all_persons     = Array.new
     @all_monsters     = Array.new
     @all_mushrooms    = Array.new
     @all_strawberries = Array.new
   end
 
   def initialize_world
-    (0..2).each { add_creature }
+    (0..2).each { add_person }
     (0..2).each { add_monster }
     (0..1).each { add_strawberry }
     (0..1).each { add_mushroom }
   end
 
 
-  # Do random movements for the creatures at first
+  # Do random movements for the persons at first
   def do_iteration
-    @all_creatures.each do |creature|
-      creature.move_random
+    @all_persons.each do |person|
+      person.move_random
     end
   end
 
@@ -48,8 +48,8 @@ class World
   def get_world_array
     world_array = Array.new(@total_length){ nil }
 
-    @all_creatures.each do |creature|
-      world_array[Matrix.two_to_one(creature.get_x_location, creature.get_y_location, @x_size)] = creature
+    @all_persons.each do |person|
+      world_array[Matrix.two_to_one(person.get_x_location, person.get_y_location, @x_size)] = person
     end
     @all_monsters.each do |monster|
       world_array[Matrix.two_to_one(monster.get_x_location, monster.get_y_location, @x_size)] = monster
@@ -67,24 +67,24 @@ class World
     Matrix.draw_matrix(get_world_array, @x_size, @y_size)
   end
 
-  def add_creature_coordinate(x_coord, y_coord)
-    new_creature = Creature.new(x_coord, y_coord, @x_size, @y_size)
-    @all_creatures.push(new_creature)
+  def add_person_coordinate(x_coord, y_coord)
+    new_person = Person.new(x_coord, y_coord, @x_size, @y_size)
+    @all_persons.push(new_person)
   end
 
-  def add_creature
+  def add_person
     coord = get_coords()
     x_coord = coord[0]
     y_coord = coord[1]
 
-    new_creature = Creature.new(x_coord, y_coord, @x_size, @y_size)
-    @all_creatures.push(new_creature)
+    new_person = Person.new(x_coord, y_coord, @x_size, @y_size)
+    @all_persons.push(new_person)
   end
 
-  def get_creature(x_location, y_location)
-    @all_creatures.each do |creature|
-      if creature.get_x_location == x_location and creature.get_y_location == y_location
-        return creature
+  def get_person(x_location, y_location)
+    @all_persons.each do |person|
+      if person.get_x_location == x_location and person.get_y_location == y_location
+        return person
       else
         return nil
       end
@@ -120,9 +120,9 @@ class World
   end
 
   def display_coordinates
-    puts 'CREATURES'
-    @all_creatures.each do |creature|
-      puts "X: #{creature.get_x_location} \nY: #{creature.get_y_location}\n"
+    puts 'persons'
+    @all_persons.each do |person|
+      puts "X: #{person.get_x_location} \nY: #{person.get_y_location}\n"
     end
     puts 'MONSTERS'
     @all_monsters.each do |monster|

@@ -17,7 +17,7 @@ module Matrix
   # Draw a line based on a given matrix
   def Matrix.draw_line(array)
     array.each do |elem|
-      if [Monster, Creature, Strawberry, Mushroom].include?(elem.class)
+      if [Monster, Person, Strawberry, Mushroom].include?(elem.class)
         repr = elem.get_representation
         if repr.length == 1
           print " #{repr} "
