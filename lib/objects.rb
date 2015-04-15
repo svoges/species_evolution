@@ -4,6 +4,7 @@ class Creature
     @y_location = y
     @x_size = x_size
     @y_size = y_size
+    @total_length = x_size * y_size
     @energy_level = 10
   end
 
@@ -37,12 +38,16 @@ class Creature
       movement = rand(4)
       good_movement = true
       if movement == 0 and can_move_south
+        puts "SOUTH"
         move_south()
       elsif movement == 1 and can_move_west
+        puts "WEST"
         move_west()
       elsif movement == 2 and can_move_north
+        puts "NORTH"
         move_north()
       elsif movement == 3 and can_move_east
+        puts "EAST"
         move_east()
       else
         good_movement = false
@@ -50,8 +55,15 @@ class Creature
     end
   end
 
+  def movements
+    puts "North #{can_move_north}"
+    puts "South #{can_move_south}"
+    puts "East #{can_move_east}"
+    puts "Wast #{can_move_west}"
+  end
+
   def can_move_north
-    if @y_location < @x_size
+    if get_single_coord < @x_size
       return false
     else
       return true
@@ -59,10 +71,15 @@ class Creature
   end
 
   def can_move_west
+    if get_single_coord % @x_size == 0
+      return false
+    else
+      return true
+    end
   end
 
   def can_move_south
-    if Matrix.two_to_one(@x_location, @y_location, @x_size) >= @x_size * @x_location
+    if @total_length - get_single_coord <= @x_size
       return false
     else
       return true
@@ -70,7 +87,7 @@ class Creature
   end
 
   def can_move_east
-    if Matrix.two_to_one(@x_location, @y_location, @x_size) % @x_size == 1
+    if get_single_coord % @x_size == @x_size - 1
       return false
     else
       return true
@@ -79,7 +96,7 @@ class Creature
 
   def move_north
     if can_move_north
-      @y_location += 1
+      @y_location -= 1
     else
       puts 'ERROR: Creature illegally moved north'
       exit
@@ -88,7 +105,7 @@ class Creature
 
   def move_south
     if can_move_south
-      @y_location -= 1
+      @y_location += 1
     else
       puts 'ERROR: Creature illegally moved south'
       exit

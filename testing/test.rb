@@ -48,6 +48,7 @@ def get_creature_test
 end
 
 def creature_movement_north
+  puts 'NORTH'
   world = World.new(5, 5)
   world.display_world
   world.add_creature_coordinate(2, 0)
@@ -56,14 +57,16 @@ def creature_movement_north
 end
 
 def creature_movement_west
+  puts 'WEST'
   world = World.new(5, 5)
   world.display_world
-  world.add_creature_coordinate(2, 0)
+  world.add_creature_coordinate(0, 2)
   world.display_world
-  assert(world.get_creature(2, 0).can_move_west == false, "creature should not be able to move WEST")
+  assert(world.get_creature(0, 2).can_move_west == false, "creature should not be able to move WEST")
 end
 
 def creature_movement_south
+  puts 'SOUTH'
   world = World.new(5, 5)
   world.display_world
   world.add_creature_coordinate(2, 4)
@@ -72,11 +75,42 @@ def creature_movement_south
 end
 
 def creature_movement_east
+  puts 'EAST'
   world = World.new(5, 5)
   world.display_world
   world.add_creature_coordinate(4, 2)
   world.display_world
-  assert(world.get_creature(0, 3).can_move_east == false, "creature should not be able to move EAST")
+  assert(world.get_creature(4, 2).can_move_east == false, "creature should not be able to move EAST")
+end
+
+def ok_creature_movement
+  world = World.new(5, 5)
+  world.add_creature_coordinate(2, 2)
+  world.display_world
+  assert(world.get_creature(2,2).can_move_north == true, "creature should be able to move NORTH")
+  assert(world.get_creature(2,2).can_move_south == true, "creature should be able to move SOUTH")
+  assert(world.get_creature(2,2).can_move_east == true, "creature should be able to move EAST")
+  assert(world.get_creature(2,2).can_move_west == true, "creature should be able to move WEST")
+end
+
+def random_creature_movement
+  world = World.new(5, 5)
+  world.add_creature
+  iterations = 10
+  while iterations > 0
+    world.display_world
+    world.do_iteration
+    iterations -= 1
+  end
+  world.display_world
+end
+
+def movement_tests
+  creature_movement_north
+  creature_movement_south
+  creature_movement_west
+  creature_movement_east
+  ok_creature_movement
 end
 
 
@@ -85,10 +119,8 @@ def run_tests
   # test_line
   # test_matrix
   # get_creature_test
-  # creature_movement_north
-  # creature_movement_south
-  creature_movement_west
-  # creature_movement_east
+  # movement_tests
+  random_creature_movement
 end
 
 run_tests
