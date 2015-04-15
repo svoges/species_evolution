@@ -97,19 +97,19 @@ class World
   end
 
   def display_coordinates
-    puts "CREATURES"
+    puts 'CREATURES'
     @all_creatures.each do |creature|
       puts "X: #{creature.get_x_location} \nY: #{creature.get_y_location}\n"
     end
-    puts "MONSTERS"
+    puts 'MONSTERS'
     @all_monsters.each do |monster|
       puts "X: #{monster.get_x_location} \nY: #{monster.get_y_location}\n"
     end
-    puts "STRAWBERRIES"
+    puts 'STRAWBERRIES'
     @all_strawberries.each do |strawberry|
       puts "X: #{strawberry.get_x_location} \nY: #{strawberry.get_y_location}\n"
     end
-    puts "MUSHROOMS"
+    puts 'MUSHROOMS'
     @all_mushrooms.each do |mushroom|
       puts "X: #{mushroom.get_x_location} \nY: #{mushroom.get_y_location}\n"
     end
