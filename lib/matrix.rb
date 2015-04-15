@@ -31,14 +31,14 @@ module Matrix
       end
       print ' '
     end
-    puts '\n'
+    puts "\n"
   end
 
   # Draw a 1-D matrix in 2-D
   def Matrix.draw_matrix(array, x_size, y_size)
     print '    '
     (0..x_size-1).each { |i| print " #{ i }  "}
-    print '\n    '
+    print "\n    "
     (0..x_size-1).each { |i| print ' -  '}
     puts ''
     counter = 0
