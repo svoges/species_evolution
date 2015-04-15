@@ -1,15 +1,10 @@
-class Person
+class Creature
   def initialize(x, y, x_size, y_size)
     @x_location = x
     @y_location = y
     @x_size = x_size
     @y_size = y_size
     @total_length = x_size * y_size
-    @energy_level = 10
-  end
-
-  def get_representation
-    'P'
   end
 
   def get_single_coord
@@ -30,29 +25,6 @@ class Person
 
   def set_y_location(location)
     @y_location = location
-  end
-
-  def move_random
-    good_movement = false
-    while !good_movement
-      movement = rand(4)
-      good_movement = true
-      if movement == 0 and can_move_south
-        puts "SOUTH"
-        move_south()
-      elsif movement == 1 and can_move_west
-        puts "WEST"
-        move_west()
-      elsif movement == 2 and can_move_north
-        puts "NORTH"
-        move_north()
-      elsif movement == 3 and can_move_east
-        puts "EAST"
-        move_east()
-      else
-        good_movement = false
-      end
-    end
   end
 
   def movements
@@ -128,7 +100,45 @@ class Person
       puts 'ERROR: Person illegally moved west'
       exit
     end
+  end
+end
 
+
+class Person < Creature
+  def initialize(x, y, x_size, y_size)
+    @x_location = x
+    @y_location = y
+    @x_size = x_size
+    @y_size = y_size
+    @total_length = x_size * y_size
+    @energy_level = 10
+  end
+
+  def get_representation
+    'P'
+  end
+
+  def move_random
+    good_movement = false
+    while !good_movement
+      movement = rand(4)
+      good_movement = true
+      if movement == 0 and can_move_south
+        puts "SOUTH"
+        move_south()
+      elsif movement == 1 and can_move_west
+        puts "WEST"
+        move_west()
+      elsif movement == 2 and can_move_north
+        puts "NORTH"
+        move_north()
+      elsif movement == 3 and can_move_east
+        puts "EAST"
+        move_east()
+      else
+        good_movement = false
+      end
+    end
   end
 
   def eat()
@@ -142,7 +152,7 @@ class Person
 
 end
 
-class Monster
+class Monster < Creature
   def initialize(x, y, x_size, y_size)
     @x_location = x
     @y_location = y
@@ -150,6 +160,14 @@ class Monster
 
   def get_representation
     'M'
+  end
+end
+
+class Food
+  def initialize(x, y)
+    @x_location = x
+    @y_location = y
+    @amount = 1
   end
 
   def get_x_location
@@ -160,16 +178,16 @@ class Monster
     @y_location
   end
 
-  def set_x_location(location)
-    @x_location = location
+  def increment
+    @amount += 1
   end
 
-  def set_y_location(location)
-    @y_location = location
+  def decrement
+    @amount -= 1
   end
 end
 
-class Strawberry
+class Strawberry < Food
   def initialize(x, y)
     @x_location = x
     @y_location = y
@@ -179,25 +197,9 @@ class Strawberry
   def get_representation
     "#{@amount}S"
   end
-
-  def get_x_location
-    @x_location
-  end
-
-  def get_y_location
-    @y_location
-  end
-
-  def increment
-    @amount += 1
-  end
-
-  def decrement
-    @amount -= 1
-  end
 end
 
-class Mushroom
+class Mushroom < Food
   def initialize(x, y)
     @x_location = x
     @y_location = y
@@ -206,21 +208,5 @@ class Mushroom
 
   def get_representation
     "#{@amount}M"
-  end
-
-  def get_x_location
-    @x_location
-  end
-
-  def get_y_location
-    @y_location
-  end
-
-  def increment
-    @amount += 1
-  end
-
-  def decrement
-    @amount -= 1
   end
 end
