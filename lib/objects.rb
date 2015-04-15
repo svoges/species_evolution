@@ -1,12 +1,18 @@
 class Creature
-  def initialize(x, y)
+  def initialize(x, y, x_size, y_size)
     @x_location = x
     @y_location = y
+    @x_size = x_size
+    @y_size = y_size
     @energy_level = 10
   end
 
   def get_representation
-    "C"
+    'C'
+  end
+
+  def get_single_coord
+    Matrix.two_to_one(@x_location, @y_location, @x_size)
   end
 
   def get_x_location
@@ -26,32 +32,86 @@ class Creature
   end
 
   def move_random
-    movement = rand(4)
-    if movement == 0
-      move_south()
-    elsif movement == 1
-      move_west()
-    elsif movement == 2
-      move_north()
+    good_movement = false
+    while !good_movement
+      movement = rand(4)
+      good_movement = true
+      if movement == 0 and can_move_south
+        move_south()
+      elsif movement == 1 and can_move_west
+        move_west()
+      elsif movement == 2 and can_move_north
+        move_north()
+      elsif movement == 3 and can_move_east
+        move_east()
+      else
+        good_movement = false
+      end
+    end
+  end
+
+  def can_move_north
+    if @y_location < @x_size
+      return false
     else
-      move_east()
+      return true
+    end
+  end
+
+  def can_move_west
+  end
+
+  def can_move_south
+    if Matrix.two_to_one(@x_location, @y_location, @x_size) >= @x_size * @x_location
+      return false
+    else
+      return true
+    end
+  end
+
+  def can_move_east
+    if Matrix.two_to_one(@x_location, @y_location, @x_size) % @x_size == 1
+      return false
+    else
+      return true
     end
   end
 
   def move_north
-    @y_location += 1
+    if can_move_north
+      @y_location += 1
+    else
+      puts 'ERROR: Creature illegally moved north'
+      exit
+    end
   end
 
   def move_south
-    @y_location -= 1
+    if can_move_south
+      @y_location -= 1
+    else
+      puts 'ERROR: Creature illegally moved south'
+      exit
+    end
   end
 
   def move_east
-    @x_location += 1
+    if can_move_east
+      @x_location += 1
+    else
+      puts 'ERROR: Creature illegally moved east'
+      exit
+    end
   end
 
   def move_west
-    @x_location -= 1
+    if can_move_west
+      @x_location -= 1
+    else
+      puts 'ERROR: Creature illegally moved west'
+      exit
+    end
+
   end
 
   def eat()
@@ -66,13 +126,13 @@ class Creature
 end
 
 class Monster
-  def initialize(x, y)
+  def initialize(x, y, x_size, y_size)
     @x_location = x
     @y_location = y
   end
 
   def get_representation
-    "M"
+    'M'
   end
 
   def get_x_location

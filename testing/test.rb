@@ -1,5 +1,6 @@
 require_relative '../lib/objects.rb'
 require_relative '../lib/matrix.rb'
+require_relative '../lib/world.rb'
 require 'test/unit'
 include Test::Unit::Assertions
 
@@ -39,10 +40,55 @@ def test_matrix
   Matrix.draw_matrix(array, 3, 3)
 end
 
+def get_creature_test
+  world = World.new(5, 5)
+  world.add_creature_coordinate(3, 3)
+  assert(world.get_creature(3, 3) != nil, "could not find creature")
+  assert(world.get_creature(1, 1).nil?  , "should be nil")
+end
+
+def creature_movement_north
+  world = World.new(5, 5)
+  world.display_world
+  world.add_creature_coordinate(2, 0)
+  world.display_world
+  assert(world.get_creature(2, 0).can_move_north == false, "creature should not be able to move NORTH")
+end
+
+def creature_movement_west
+  world = World.new(5, 5)
+  world.display_world
+  world.add_creature_coordinate(2, 0)
+  world.display_world
+  assert(world.get_creature(2, 0).can_move_west == false, "creature should not be able to move WEST")
+end
+
+def creature_movement_south
+  world = World.new(5, 5)
+  world.display_world
+  world.add_creature_coordinate(2, 4)
+  world.display_world
+  assert(world.get_creature(2, 4).can_move_south == false, "creature should not be able to move SOUTH")
+end
+
+def creature_movement_east
+  world = World.new(5, 5)
+  world.display_world
+  world.add_creature_coordinate(4, 2)
+  world.display_world
+  assert(world.get_creature(0, 3).can_move_east == false, "creature should not be able to move EAST")
+end
+
+
 def run_tests
   # test_creature_creation
   # test_line
   # test_matrix
+  # get_creature_test
+  # creature_movement_north
+  # creature_movement_south
+  creature_movement_west
+  # creature_movement_east
 end
 
 run_tests

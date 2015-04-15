@@ -14,3 +14,9 @@ end
 world.initialize_world
 
 world.display_world
+
+iterations = 5
+while iterations > 0
+  world.do_iteration
+  world.display_world
+end

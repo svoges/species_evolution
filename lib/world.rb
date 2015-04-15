@@ -19,6 +19,14 @@ class World
     (0..1).each { add_mushroom }
   end
 
+
+  # Do random movements for the creatures at first
+  def do_iteration
+    @all_creatures.each do |creature|
+      creature.move_random
+    end
+  end
+
   def get_coords_used
     @coords_used
   end
@@ -59,13 +67,28 @@ class World
     Matrix.draw_matrix(get_world_array, @x_size, @y_size)
   end
 
+  def add_creature_coordinate(x_coord, y_coord)
+    new_creature = Creature.new(x_coord, y_coord, @x_size, @y_size)
+    @all_creatures.push(new_creature)
+  end
+
   def add_creature
     coord = get_coords()
     x_coord = coord[0]
     y_coord = coord[1]
 
-    new_creature = Creature.new(x_coord, y_coord)
+    new_creature = Creature.new(x_coord, y_coord, @x_size, @y_size)
     @all_creatures.push(new_creature)
+  end
+
+  def get_creature(x_location, y_location)
+    @all_creatures.each do |creature|
+      if creature.get_x_location == x_location and creature.get_y_location == y_location
+        return creature
+      else
+        return nil
+      end
+    end
   end
 
   def add_monster
@@ -73,7 +96,7 @@ class World
     x_coord = coord[0]
     y_coord = coord[1]
 
-    new_monster = Monster.new(x_coord, y_coord)
+    new_monster = Monster.new(x_coord, y_coord, @x_size, @y_size)
     @all_monsters.push(new_monster)
   end
 
