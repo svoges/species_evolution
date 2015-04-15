@@ -27,20 +27,20 @@ module Matrix
           print "#{repr}"
         end
       else
-        print " - "
+        print ' - '
       end
-      print " "
+      print ' '
     end
-    puts "\n"
+    puts '\n'
   end
 
   # Draw a 1-D matrix in 2-D
   def Matrix.draw_matrix(array, x_size, y_size)
-    print "    "
+    print '    '
     (0..x_size-1).each { |i| print " #{ i }  "}
-    print "\n    "
-    (0..x_size-1).each { |i| print " -  "}
-    puts ""
+    print '\n    '
+    (0..x_size-1).each { |i| print ' -  '}
+    puts ''
     counter = 0
     copied_array = Array.new(array)
     (0..y_size - 1).each do |i|
@@ -51,9 +51,9 @@ module Matrix
       counter += 1
     end
     if !copied_array.empty?
-      puts "ERROR: Entire matrix was not drawn"
+      puts 'ERROR: Entire matrix was not drawn'
     end
-    puts ""
+    puts ''
   end
 
   def Matrix.two_to_one(x_coord, y_coord, x_size)
