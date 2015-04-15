@@ -125,11 +125,13 @@ def eat_strawberry
   world.add_person_coordinate(0, 0)
   world.add_strawberry_coordinate(1, 0)
   world.display_world
+  strawb_number = world.get_objects_at_coord(1, 0)[0].get_amount
+  puts strawb_number
   assert(world.get_objects_at_coord(0, 0)[0].class == Person, "objects indexed incorrectly")
   assert(world.get_objects_at_coord(1, 0)[0].class == Strawberry, "objects indexed incorrectly")
   world.do_iteration
   world.do_iteration
-  assert(world.get_strawberries.empty?, "Strawberry wasn't removed")
+  assert(world.get_objects_at_coord(1, 0)[0].get_amount == strawb_number - 1, "Strawberry wasn't removed")
 end
 
 def eat_mushroom
@@ -141,6 +143,17 @@ def eat_mushroom
   world.do_iteration
   world.do_iteration
   assert(world.get_persons.empty?, "Person didn't die from eating mushroom")
+end
+
+def touch_monster
+  puts '=======TOUCH MONSTER TEST======'
+  world = World.new(2, 1)
+  world.add_person_coordinate(0, 0)
+  world.add_monster_coordinate(1, 0)
+  world.display_world
+  world.do_iteration
+  world.do_iteration
+  assert(world.get_persons.empty?, 'Person didn\'t die from touching monster')
 end
 
 def test_world
@@ -167,6 +180,7 @@ def run_tests
   # get_object
   eat_strawberry
   eat_mushroom
+  touch_monster
 end
 
 run_tests

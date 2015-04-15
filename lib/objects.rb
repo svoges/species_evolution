@@ -5,6 +5,7 @@ class Creature
     @x_size = x_size
     @y_size = y_size
     @total_length = x_size * y_size
+    @type = 'Creature'
   end
 
   def get_single_coord
@@ -70,7 +71,7 @@ class Creature
     if can_move_north
       @y_location -= 1
     else
-      puts 'ERROR: Person illegally moved north'
+      puts "ERROR: #{@type} illegally moved north"
       exit
     end
   end
@@ -79,7 +80,7 @@ class Creature
     if can_move_south
       @y_location += 1
     else
-      puts 'ERROR: Person illegally moved south'
+      puts "ERROR: #{@type} illegally moved south"
       exit
     end
   end
@@ -88,7 +89,7 @@ class Creature
     if can_move_east
       @x_location += 1
     else
-      puts 'ERROR: Person illegally moved east'
+      puts "ERROR: #{@type} illegally moved east"
       exit
     end
   end
@@ -97,7 +98,7 @@ class Creature
     if can_move_west
       @x_location -= 1
     else
-      puts 'ERROR: Person illegally moved west'
+      puts "ERROR: #{@type} illegally moved west"
       exit
     end
   end
@@ -134,47 +135,12 @@ class Person < Creature
     @x_size = x_size
     @y_size = y_size
     @total_length = x_size * y_size
+    @type = 'Person'
     @energy_level = 10
   end
 
   def get_representation
     'P'
-  end
-
-  def move_north
-    if can_move_north
-      @y_location -= 1
-    else
-      puts 'ERROR: Person illegally moved north'
-      exit
-    end
-  end
-
-  def move_south
-    if can_move_south
-      @y_location += 1
-    else
-      puts 'ERROR: Person illegally moved south'
-      exit
-    end
-  end
-
-  def move_east
-    if can_move_east
-      @x_location += 1
-    else
-      puts 'ERROR: Person illegally moved east'
-      exit
-    end
-  end
-
-  def move_west
-    if can_move_west
-      @x_location -= 1
-    else
-      puts 'ERROR: Person illegally moved west'
-      exit
-    end
   end
 
   def eat()
@@ -213,6 +179,10 @@ class Monster < Creature
   def initialize(x, y, x_size, y_size)
     @x_location = x
     @y_location = y
+    @x_size = x_size
+    @y_size = y_size
+    @total_length = x_size * y_size
+    @type = 'Monster'
   end
 
   def get_representation
@@ -224,7 +194,7 @@ class Food
   def initialize(x, y)
     @x_location = x
     @y_location = y
-    @amount = 1
+    @amount = rand(1..4)
   end
 
   def get_amount

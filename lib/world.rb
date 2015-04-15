@@ -50,6 +50,9 @@ class World
         end
       end
     end
+
+    @all_monsters.each do |monster|
+      monster.move_random
     display_world
   end
 
@@ -73,7 +76,7 @@ class World
     @coords_used
   end
 
-  def get_coords
+  def get_empty_coords
     good_coords = false
     curr_world = get_world_array
     while !good_coords
@@ -119,7 +122,7 @@ class World
   end
 
   def add_person
-    coord = get_coords()
+    coord = get_empty_coords()
     x_coord = coord[0]
     y_coord = coord[1]
 
@@ -138,7 +141,7 @@ class World
   end
 
   def add_monster
-    coord = get_coords()
+    coord = get_empty_coords()
     x_coord = coord[0]
     y_coord = coord[1]
 
@@ -146,8 +149,13 @@ class World
     @all_monsters.push(new_monster)
   end
 
+  def add_monster_coordinate(x_coord, y_coord)
+    new_monster = Monster.new(x_coord, y_coord, @x_size, @y_size)
+    @all_monsters.push(new_monster)
+  end
+
   def add_strawberry
-    coord = get_coords()
+    coord = get_empty_coords()
     x_coord = coord[0]
     y_coord = coord[1]
 
@@ -156,13 +164,21 @@ class World
   end
 
   def add_strawberry_coordinate(x_coord, y_coord)
-    new_strawberry = Strawberry.new(x_coord, y_coord)
-    @all_strawberries.push(new_strawberry)
+    strawberry_exists = false
+    @all_strawberries.each do |strawberry|
+      if Matrix.two_to_one(strawberry.x_location, strawberry.y_location, @x_size) == Matrix.two_to_one(x_coord, y_coord, @x_size)
+        strawberry.increment
+        strawberry_exists = true
+      end
+    end
+    if !strawberry_exists
+      new_strawberry = Strawberry.new(x_coord, y_coord)
+      @all_strawberries.push(new_strawberry)
+    end
   end
 
   def add_mushroom
-    get_coords_used
-    coord = get_coords()
+    coord = get_empty_coords()
     x_coord = coord[0]
     y_coord = coord[1]
 
