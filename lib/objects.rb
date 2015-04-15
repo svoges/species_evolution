@@ -149,7 +149,6 @@ class Person < Creature
 
   def nearest_strawberry
   end
-
 end
 
 class Monster < Creature
@@ -188,24 +187,12 @@ class Food
 end
 
 class Strawberry < Food
-  def initialize(x, y)
-    @x_location = x
-    @y_location = y
-    @amount = 1
-  end
-
   def get_representation
     "#{@amount}S"
   end
 end
 
 class Mushroom < Food
-  def initialize(x, y)
-    @x_location = x
-    @y_location = y
-    @amount = 1
-  end
-
   def get_representation
     "#{@amount}M"
   end
