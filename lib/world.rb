@@ -23,7 +23,7 @@ class World
   # Do random movements for the persons at first
   def do_iteration
     @all_persons.each do |person|
-      person.move_random
+      person.move_random(get_world_array)
       present_objects = get_objects_at_coord(person.get_x_location, person.get_y_location)
       if !present_objects.nil?
         present_objects.each do |object|
@@ -52,7 +52,25 @@ class World
     end
 
     @all_monsters.each do |monster|
-      monster.move_random
+      monster.move_random(get_world_array)
+      present_objects = get_objects_at_coord(monster.get_x_location, monster.get_y_location)
+      if !present_objects.nil?
+        present_objects.each do |object|
+          if object != monster
+            if object.class == Strawberry
+              # do nothing
+            elsif object.class == Mushroom
+              # do nothing
+            elsif object.class == Person
+              @all_persons.delete(object)
+            else
+              puts 'UNIDENTIFIED MONSTER OBJECT'
+              exit
+            end
+          end
+        end
+      end
+    end
     display_world
   end
 
@@ -80,6 +98,10 @@ class World
     good_coords = false
     curr_world = get_world_array
     while !good_coords
+      if @total_length == @coords_used.size
+        puts 'INPUT BIGGER MATRIX'
+        exit
+      end
       x_coord = rand(@x_size)
       y_coord = rand(@y_size)
       if curr_world[Matrix.two_to_one(x_coord, y_coord, @x_size)].empty?

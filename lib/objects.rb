@@ -32,10 +32,18 @@ class Creature
     puts "North #{can_move_north}"
     puts "South #{can_move_south}"
     puts "East #{can_move_east}"
-    puts "Wast #{can_move_west}"
+    puts "West #{can_move_west}"
   end
 
-  def can_move_north
+  def can_move_north(world_array)
+    objects = objects_north(world_array)
+    if !objects.empty?
+      objects.each do |object|
+        if object.class == self.class
+          return false
+        end
+      end
+    end
     if get_single_coord < @x_size
       return false
     else
@@ -43,7 +51,15 @@ class Creature
     end
   end
 
-  def can_move_west
+  def can_move_west(world_array)
+    objects = objects_west(world_array)
+    if !objects.empty?
+      objects.each do |object|
+        if object.class == self.class
+          return false
+        end
+      end
+    end
     if get_single_coord % @x_size == 0
       return false
     else
@@ -51,7 +67,15 @@ class Creature
     end
   end
 
-  def can_move_south
+  def can_move_south(world_array)
+    objects = objects_south(world_array)
+    if !objects.empty?
+      objects.each do |object|
+        if object.class == self.class
+          return false
+        end
+      end
+    end
     if @total_length - get_single_coord <= @x_size
       return false
     else
@@ -59,7 +83,15 @@ class Creature
     end
   end
 
-  def can_move_east
+  def can_move_east(world_array)
+    objects = objects_east(world_array)
+    if !objects.empty?
+      objects.each do |object|
+        if object.class == self.class
+          return false
+        end
+      end
+    end
     if get_single_coord % @x_size == @x_size - 1
       return false
     else
@@ -67,8 +99,28 @@ class Creature
     end
   end
 
-  def move_north
-    if can_move_north
+  def objects_north(world_array)
+    coordinate = Matrix.two_to_one(@x_location, @y_location - 1, @x_size)
+    return world_array[coordinate]
+  end
+
+  def objects_west(world_array)
+    coordinate = Matrix.two_to_one(@x_location - 1, @y_location, @x_size)
+    return world_array[coordinate]
+  end
+
+  def objects_east(world_array)
+    coordinate = Matrix.two_to_one(@x_location + 1, @y_location, @x_size)
+    return world_array[coordinate]
+  end
+
+  def objects_south(world_array)
+    coordinate = Matrix.two_to_one(@x_location, @y_location + 1, @x_size)
+    return world_array[coordinate]
+  end
+
+  def move_north(world_array)
+    if can_move_north(world_array)
       @y_location -= 1
     else
       puts "ERROR: #{@type} illegally moved north"
@@ -76,8 +128,8 @@ class Creature
     end
   end
 
-  def move_south
-    if can_move_south
+  def move_south(world_array)
+    if can_move_south(world_array)
       @y_location += 1
     else
       puts "ERROR: #{@type} illegally moved south"
@@ -85,8 +137,8 @@ class Creature
     end
   end
 
-  def move_east
-    if can_move_east
+  def move_east(world_array)
+    if can_move_east(world_array)
       @x_location += 1
     else
       puts "ERROR: #{@type} illegally moved east"
@@ -94,8 +146,8 @@ class Creature
     end
   end
 
-  def move_west
-    if can_move_west
+  def move_west(world_array)
+    if can_move_west(world_array)
       @x_location -= 1
     else
       puts "ERROR: #{@type} illegally moved west"
@@ -103,23 +155,29 @@ class Creature
     end
   end
 
-  def move_random
+  def no_possible_moves(world_array)
+    !(can_move_west(world_array) or can_move_east(world_array) or can_move_north(world_array) or can_move_south(world_array))
+  end
+
+  def move_random(world_array)
     good_movement = false
     while !good_movement
       movement = rand(4)
       good_movement = true
-      if movement == 0 and can_move_south
+      if movement == 0 and can_move_south(world_array)
         puts "SOUTH"
-        move_south()
-      elsif movement == 1 and can_move_west
+        move_south(world_array)
+      elsif movement == 1 and can_move_west(world_array)
         puts "WEST"
-        move_west()
-      elsif movement == 2 and can_move_north
+        move_west(world_array)
+      elsif movement == 2 and can_move_north(world_array)
         puts "NORTH"
-        move_north()
-      elsif movement == 3 and can_move_east
+        move_north(world_array)
+      elsif movement == 3 and can_move_east(world_array)
         puts "EAST"
-        move_east()
+        move_east(world_array)
+      elsif no_possible_moves(world_array)
+        # do nothing
       else
         good_movement = false
       end
@@ -147,23 +205,25 @@ class Person < Creature
     @energy_level += 2
   end
 
-  def move_random
+  def move_random(world_array)
     good_movement = false
     while !good_movement
       movement = rand(4)
       good_movement = true
-      if movement == 0 and can_move_south
+      if movement == 0 and can_move_south(world_array)
         puts "SOUTH"
-        move_south()
-      elsif movement == 1 and can_move_west
+        move_south(world_array)
+      elsif movement == 1 and can_move_west(world_array)
         puts "WEST"
-        move_west()
-      elsif movement == 2 and can_move_north
+        move_west(world_array)
+      elsif movement == 2 and can_move_north(world_array)
         puts "NORTH"
-        move_north()
-      elsif movement == 3 and can_move_east
+        move_north(world_array)
+      elsif movement == 3 and can_move_east(world_array)
         puts "EAST"
-        move_east()
+        move_east(world_array)
+      elsif no_possible_moves(world_array)
+        # do nothing
       else
         good_movement = false
       end

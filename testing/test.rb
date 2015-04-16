@@ -168,6 +168,41 @@ def test_best_object
   world.display_world
 end
 
+def monster_movement
+  world = World.new(5,5)
+  world.add_monster
+  (0..5).each do
+    world.do_iteration
+  end
+end
+
+def full_movement_test
+  world = World.new(4, 4)
+  world.initialize_world
+  (0..10).each do
+    world.do_iteration
+  end
+end
+
+def north_person
+  world = World.new(1, 3)
+  world.add_person_coordinate(0, 0)
+  world.add_person_coordinate(0, 1)
+  world.display_world
+  world.get_objects_at_coord(0, 1)[0].move_random(world.get_world_array)
+  world.display_world
+end
+
+def person_movement
+  world = World.new(5, 5)
+  (0..4).each do
+    world.add_person
+  end
+  (0..5).each do
+    world.do_iteration
+  end
+end
+
 def run_tests
   # test_world
   # test_best_object
@@ -178,9 +213,13 @@ def run_tests
   # movement_tests
   # random_person_movement
   # get_object
-  eat_strawberry
-  eat_mushroom
-  touch_monster
+  # eat_strawberry
+  # eat_mushroom
+  # touch_monster
+  # monster_movement
+  # full_movement_test
+  # north_person
+  person_movement
 end
 
 run_tests
