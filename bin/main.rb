@@ -17,7 +17,7 @@ elsif ARGV[0].to_i > 0 and ARGV[1].to_i > 0
     if ARGV.include?('-i')
       manual_iteration = true
     end
-    if ARGV.include?('-s')
+    if ARGV.include?('-m')
       manual_movement = true
     end
     world = World.new(ARGV[0].to_i, ARGV[1].to_i, manual_movement, manual_iteration)

@@ -3,7 +3,13 @@ require_relative 'matrix.rb'
 class World
   def initialize(x_size, y_size, manual_movement, manual_iteration)
     @manual_movement = manual_movement
+    if @manual_movement
+      puts "MANUAL MOVEMENT ENABLED"
+    end
     @manual_iteration = manual_iteration
+    if @manual_iteration
+      puts "MANUAL ITERATION ENABLED"
+    end
     @x_size = x_size
     @y_size = y_size
     @total_length = x_size * y_size
@@ -22,15 +28,23 @@ class World
     display_world
   end
 
+  def do_manual
+    display_world
+    puts "Press enter to continue"
+    STDOUT.flush
+    STDIN.gets.chomp
+  end
+
   # Do random movements for the persons at first
   def do_iteration
     if @manual_iteration
-      puts "Press enter to continue"
-      STDOUT.flush
-      move_forward = STDIN.gets.chomp
+      do_manual
     end
 
     @all_persons.each do |person|
+      if @manual_movement
+        puts do_manual
+      end
       person.move_random(get_world_array)
       present_objects = get_objects_at_coord(person.get_x_location, person.get_y_location)
       if !present_objects.nil?
@@ -58,8 +72,12 @@ class World
         end
       end
     end
+    puts "=====PERSON ITERATION FINISHED====="
 
     @all_monsters.each do |monster|
+      if @manual_iteration
+        do_manual
+      end
       monster.move_random(get_world_array)
       present_objects = get_objects_at_coord(monster.get_x_location, monster.get_y_location)
       if !present_objects.nil?
@@ -80,6 +98,7 @@ class World
       end
     end
     display_world
+    puts "=====MONSTER ITERATION FINISHED====="
   end
 
   def get_strawberries
