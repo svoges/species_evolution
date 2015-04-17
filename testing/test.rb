@@ -176,6 +176,14 @@ def monster_movement
   end
 end
 
+def monster_strawb
+  world = World.new(2, 1)
+  world.add_monster
+  world.add_strawberry
+  world.do_iteration
+  world.do_iteration
+end
+
 def full_movement_test
   world = World.new(4, 4)
   world.initialize_world
@@ -230,7 +238,8 @@ def run_tests
   # full_movement_test
   # north_person
   # person_movement
-  no_movement
+  # no_movement
+  monster_strawb
 end
 
 run_tests
