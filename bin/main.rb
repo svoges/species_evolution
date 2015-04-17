@@ -13,4 +13,8 @@ end
 # Create creatures. population could be done better
 world.initialize_world
 
-world.display_world
+iterations = 5
+while iterations > 0
+  world.do_iteration
+  iterations -= 1
+end
