@@ -37,7 +37,7 @@ class Creature
 
   def can_move_north(world_array)
     objects = objects_north(world_array)
-    if !objects.empty?
+    if !objects.nil?
       objects.each do |object|
         if object.class == self.class
           return false
@@ -53,7 +53,7 @@ class Creature
 
   def can_move_west(world_array)
     objects = objects_west(world_array)
-    if !objects.empty?
+    if !objects.nil?
       objects.each do |object|
         if object.class == self.class
           return false
@@ -69,7 +69,7 @@ class Creature
 
   def can_move_south(world_array)
     objects = objects_south(world_array)
-    if !objects.empty?
+    if !objects.nil?
       objects.each do |object|
         if object.class == self.class
           return false
@@ -85,7 +85,7 @@ class Creature
 
   def can_move_east(world_array)
     objects = objects_east(world_array)
-    if !objects.empty?
+    if !objects.nil?
       objects.each do |object|
         if object.class == self.class
           return false
@@ -223,6 +223,7 @@ class Person < Creature
         puts "EAST"
         move_east(world_array)
       elsif no_possible_moves(world_array)
+        puts "NO POSSIBLE MOVES"
         # do nothing
       else
         good_movement = false

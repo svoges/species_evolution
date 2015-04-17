@@ -203,6 +203,16 @@ def person_movement
   end
 end
 
+def no_movement
+  world = World.new(2, 1)
+  (0..1).each do
+    world.add_person
+  end
+  (0..3).each do
+    world.do_iteration
+  end
+end
+
 def run_tests
   # test_world
   # test_best_object
@@ -219,7 +229,8 @@ def run_tests
   # monster_movement
   # full_movement_test
   # north_person
-  person_movement
+  # person_movement
+  no_movement
 end
 
 run_tests
