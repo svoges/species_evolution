@@ -1,7 +1,9 @@
 require_relative 'matrix.rb'
 
 class World
-  def initialize(x_size, y_size)
+  def initialize(x_size, y_size, manual_movement, manual_iteration)
+    @manual_movement = manual_movement
+    @manual_iteration = manual_iteration
     @x_size = x_size
     @y_size = y_size
     @total_length = x_size * y_size
@@ -22,6 +24,12 @@ class World
 
   # Do random movements for the persons at first
   def do_iteration
+    if @manual_iteration
+      puts "Press enter to continue"
+      STDOUT.flush
+      move_forward = STDIN.gets.chomp
+    end
+
     @all_persons.each do |person|
       person.move_random(get_world_array)
       present_objects = get_objects_at_coord(person.get_x_location, person.get_y_location)
