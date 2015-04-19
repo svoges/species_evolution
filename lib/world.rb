@@ -32,7 +32,10 @@ class World
     display_world
     puts "Press enter to continue"
     STDOUT.flush
-    STDIN.gets.chomp
+    input = STDIN.gets.chomp
+    if input == "quit" or input == "exit"
+      exit
+    end
   end
 
   # Do random movements for the persons at first
@@ -40,7 +43,7 @@ class World
     if @manual_iteration
       do_manual
     end
-
+    people_to_delete = Array.new
     @all_persons.each do |person|
       if @manual_movement
         puts do_manual
@@ -57,13 +60,13 @@ class World
                 @all_strawberries.delete(object)
               end
             elsif object.class == Mushroom
-              @all_persons.delete(person)
+              people_to_delete.push(person)
               object.decrement
               if object.get_amount <= 0
                 @all_mushrooms.delete(object)
               end
             elsif object.class == Monster
-              @all_persons.delete(person)
+              people_to_delete.push(person)
             else
               puts 'UNIDENTIFIED PERSON OBJECT'
               exit
@@ -72,10 +75,12 @@ class World
         end
       end
     end
-    puts "=====PERSON ITERATION FINISHED====="
+    people_to_delete.each do |person_to_delete|
+      @all_persons.delete(person_to_delete)
+    end
 
     @all_monsters.each do |monster|
-      if @manual_iteration
+      if @manual_movement
         do_manual
       end
       monster.move_random(get_world_array)
@@ -98,7 +103,6 @@ class World
       end
     end
     display_world
-    puts "=====MONSTER ITERATION FINISHED====="
   end
 
   def get_strawberries

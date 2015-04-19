@@ -207,16 +207,12 @@ class Person < Creature
       movement = rand(4)
       good_movement = true
       if movement == 0 and can_move_south(world_array)
-        puts "SOUTH"
         move_south(world_array)
       elsif movement == 1 and can_move_west(world_array)
-        puts "WEST"
         move_west(world_array)
       elsif movement == 2 and can_move_north(world_array)
-        puts "NORTH"
         move_north(world_array)
       elsif movement == 3 and can_move_east(world_array)
-        puts "EAST"
         move_east(world_array)
       elsif no_possible_moves(world_array)
         puts "NO POSSIBLE MOVES"

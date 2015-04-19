@@ -7,8 +7,8 @@ if ARGV.length < 2
   if ARGV.include?('-help')
     puts "Help information for Evolve a Species Project"
     puts "Usage: ruby [x_location] [y_location] [options]"
-    puts "   -i      enable manual printing after each iteration"
-    puts "   -m      enable manual printing after each movement"
+    puts "   -i      enable manual printing after each iteration, 'exit' or 'quit' to abort"
+    puts "   -m      enable manual printing after each movement, 'exit' or 'quit' to abort"
     exit
   else
     puts "ERROR: Need 2 inputs for x and y values of array"
@@ -31,7 +31,7 @@ end
 # Create creatures
 world.initialize_world
 
-iterations = 5
+iterations = 50
 while iterations > 0
   world.do_iteration
   iterations -= 1
