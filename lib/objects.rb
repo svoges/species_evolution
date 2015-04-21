@@ -193,11 +193,15 @@ class Person < Creature
     @energy_level = 10
   end
 
+  def get_energy_level
+    @energy_level
+  end
+
   def get_representation
     'P'
   end
 
-  def eat()
+  def eat
     @energy_level += 2
   end
 

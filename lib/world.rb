@@ -43,7 +43,7 @@ class World
     if @manual_iteration
       do_manual
     end
-    people_to_delete = Array.new
+    persons_to_delete = Array.new
     @all_persons.each do |person|
       if @manual_movement
         puts do_manual
@@ -60,13 +60,13 @@ class World
                 @all_strawberries.delete(object)
               end
             elsif object.class == Mushroom
-              people_to_delete.push(person)
+              persons_to_delete.push(person)
               object.decrement
               if object.get_amount <= 0
                 @all_mushrooms.delete(object)
               end
             elsif object.class == Monster
-              people_to_delete.push(person)
+              persons_to_delete.push(person)
             else
               puts 'UNIDENTIFIED PERSON OBJECT'
               exit
@@ -74,8 +74,11 @@ class World
           end
         end
       end
+      if person.get_energy_level <= 0
+        persons_to_delete.push(person)
+      end
     end
-    people_to_delete.each do |person_to_delete|
+    persons_to_delete.each do |person_to_delete|
       @all_persons.delete(person_to_delete)
     end
 

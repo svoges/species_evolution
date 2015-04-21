@@ -221,6 +221,15 @@ def no_movement
   end
 end
 
+def energy_drop
+  world = World.new(2, 1, false, false)
+  world.add_person
+  (0..15).each do
+    world.do_iteration
+  end
+  assert(world.get_persons.empty?, "person did not die")
+end
+
 def run_tests
   # test_world
   # test_best_object
@@ -239,7 +248,8 @@ def run_tests
   # north_person
   # person_movement
   # no_movement
-  monster_strawb
+  # monster_strawb
+  energy_drop
 end
 
 run_tests
