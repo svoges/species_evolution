@@ -10,6 +10,7 @@ if ARGV.length < 2
     puts "Usage: ruby [x_location] [y_location] [options]"
     puts "   -i      enable manual printing after each iteration, 'exit' or 'quit' to abort"
     puts "   -m      enable manual printing after each movement, 'exit' or 'quit' to abort"
+    puts "   -v      enable graphical mode"
     exit
   else
     puts "ERROR: Need 2 inputs for x and y values of array"
