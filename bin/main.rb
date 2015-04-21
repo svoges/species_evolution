@@ -1,7 +1,7 @@
 require_relative '../lib/objects.rb'
 require_relative '../lib/matrix.rb'
 require_relative '../lib/world.rb'
-# require 'shoes'
+require 'green_shoes'
 
 
 if ARGV.length < 2
