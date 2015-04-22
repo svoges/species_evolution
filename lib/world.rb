@@ -48,32 +48,67 @@ class World
       if @manual_movement
         puts do_manual
       end
-      person.move(get_world_array, all_objects)
-      present_objects = get_objects_at_coord(person.get_x_location, person.get_y_location)
-      if !present_objects.nil?
-        present_objects.each do |object|
-          if object != person
-            if object.class == Strawberry
+      action = person.move(get_world_array, all_objects)
+      if action[1] == 'eat'
+        present_objects = get_objects_at_coord(person.get_x_location, person.get_y_location)
+        present_objects.each do |food|
+          if food != person
+            if food.class == Strawberry
               person.eat
-              object.decrement
-              if object.get_amount <= 0
-                @all_strawberries.delete(object)
+              food.decrement
+              if food.get_amount <= 0
+                @all_strawberries.delete(food)
               end
-            elsif object.class == Mushroom
+            elsif food.class == Mushroom
               persons_to_delete.push(person)
-              object.decrement
-              if object.get_amount <= 0
-                @all_mushrooms.delete(object)
+              food.decrement
+              if food.get_amount <= 0
+                @all_mushrooms.delete(food)
               end
-            elsif object.class == Monster
-              persons_to_delete.push(person)
             else
-              puts 'UNIDENTIFIED PERSON OBJECT'
-              exit
+              puts "cannot eat #{food.class}"
             end
           end
         end
+      elsif action[1] == 'ignore'
+        # do nothing or move randomly
+      elsif action[1] == 'towards'
+        if action[0] == 3
+          strawb = person.nearest_strawberry(all_objects)
+          person.move_towards(get_world_array, strawb)
+        elsif action[0] == 4
+          mush = person.nearest_mushroom(all_objects)
+          person.move_towards(get_world_array, mush)
+        elsif action[0] == 5
+          monster = person.nearest_monster(all_objects)
+          person.move_towards(get_world_array, monster)
+        elsif action[0] == 6
+          creature = person.nearest_person(all_objects)
+          person.move_towards(get_world_array, creature)
+        else
+          puts "invalid action: #{action}"
+        end
+      elsif action[1] == 'away_from'
+        if action[0] == 3
+          strawb = person.nearest_strawberry(all_objects)
+          person.away_from(get_world_array, strawb)
+        elsif action[0] == 4
+          mush = person.nearest_mushroom(all_objects)
+          person.away_from(get_world_array, mush)
+        elsif action[0] == 5
+          monster = person.nearest_monster(all_objects)
+          person.away_from(get_world_array, monster)
+        elsif action[0] == 6
+          creature = person.nearest_person(all_objects)
+          person.away_from(get_world_array, creature)
+        else
+          puts "invalid action: #{action}"
+        end
+      elsif action[1] == 'random'
+      else
+        puts "#{action} not a valid action"
       end
+
       if person.get_energy_level <= 0
         persons_to_delete.push(person)
       end

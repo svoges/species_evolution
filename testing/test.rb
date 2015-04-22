@@ -285,6 +285,27 @@ def find_creature
   assert(world.get_objects_at_coord(2, 0)[0].class == Monster, "monster moved in wrong direction")
 end
 
+def chromosome_initialize
+  chr = Chromosome.new
+  puts chr.get_sequence
+end
+
+def strawberry_behavior
+  world = World.new(2, 2, false, false)
+  world.add_person
+  puts world.get_persons[0].get_chromosome.get_sequence
+  world.add_strawberry
+  world.display_world
+  (0..5).each do
+    world.do_iteration
+  end
+end
+
+def new_person_creation
+  person = Person.new(1, 2, 3, 4)
+  puts person.get_chromosome.get_sequence
+end
+
 def run_tests
   # test_world
   # test_best_object
@@ -308,7 +329,10 @@ def run_tests
   # prune_array
   # test_euclid
   # nearest_strawb
-  find_creature
+  # find_creature
+  # chromosome_initialize
+  # new_person_creation
+  strawberry_behavior
 end
 
 run_tests

@@ -182,6 +182,75 @@ class Creature
   end
 end
 
+class Chromosome
+  def initialize
+    @sequence = {
+      1 => [eat_or_ignore, rand(100)],
+      2 => [eat_or_ignore, rand(100)],
+      3 => [movement,      rand(100)],
+      4 => [movement,      rand(100)],
+      5 => [movement,      rand(100)],
+      6 => [movement,      rand(100)]
+    }
+  end
+
+  def get_sequence
+    @sequence
+  end
+
+  def get_strawb_present_weight
+    @sequence[1][1]
+  end
+
+  def get_mush_present_weight
+    @sequence[2][1]
+  end
+
+  def get_nearest_strawb_weight
+    @sequence[3][1]
+  end
+
+  def get_nearest_mush_weight
+    @sequence[4][1]
+  end
+
+  def get_nearest_monster_weight
+    @sequence[5][1]
+  end
+
+  def get_nearest_person_weight
+    @sequence[6][1]
+  end
+
+  def movement
+    action = rand(4)
+    if action == 0
+      return 'towards'
+    elsif action == 1
+      return 'away_from'
+    elsif action == 2
+      return 'random'
+    elsif action == 3
+      return 'ignore'
+    else
+      puts "RANDOM FUNCTION INCORRECT"
+      exit
+    end
+  end
+
+  def eat_or_ignore
+    action = rand(2)
+    if action == 0
+      return 'eat'
+    elsif action == 1
+      return 'ignore'
+    else
+      puts "RANDOM FUNCTION INCORRECT"
+      exit
+    end
+  end
+end
+
 class Person < Creature
   def initialize(x, y, x_size, y_size)
     @x_location = x
@@ -191,6 +260,11 @@ class Person < Creature
     @total_length = x_size * y_size
     @type = 'Person'
     @energy_level = 10
+    @chromosome = Chromosome.new
+  end
+
+  def get_chromosome
+    @chromosome
   end
 
   def get_energy_level
@@ -205,9 +279,71 @@ class Person < Creature
     @energy_level += 2
   end
 
-  def move(world_array, all_objects)
-    move_random(world_array)
-    @energy_level -= 1
+  # See the monster example for nearest person as a template
+  def move_towards(world_array, target)
+    if target
+      if target.get_x_location < @x_location
+        if can_move_west(world_array)
+          move_west(world_array)
+        end
+      elsif target.get_x_location > @x_location
+        if can_move_east(world_array)
+          move_east(world_array)
+        end
+      elsif target.get_y_location < @y_location
+        if can_move_north(world_array)
+          move_north(world_array)
+        end
+      elsif target.get_y_location > @y_location
+        if can_move_south(world_array)
+          move_south(world_array)
+        end
+      else
+        puts 'TARGET ON SAME TILE'
+      end
+    else
+      move_random(world_array)
+    end
+  end
+
+  def away_from(world_array, target)
+    if target
+      if target.get_x_location < @x_location and can_move_east(world_array)
+        move_east(world_array)
+      elsif target.get_x_location > @x_location and can_move_west(world_array)
+        move_west(world_array)
+      elsif target.get_y_location < @y_location and can_move_south(world_array)
+        move_south(world_array)
+      elsif target.get_y_location > @y_location and can_move_north(world_array)
+        move_north(world_array)
+      else
+        puts 'TARGET ON SAME TILE'
+      end
+    else
+      move_random(world_array)
+    end
+  end
+
+  def strawberry_present(all_objects)
+    all_strawberries = all_objects["Strawberries"]
+    current_location = Matrix.two_to_one(@x_location, @y_location, @x_size)
+    all_strawberries.each do |strawberry|
+      if Matrix.two_to_one(strawberry.get_x_location, strawberry.get_y_location, @x_size) == current_location
+        return true
+      end
+    end
+    false
+  end
+
+  def mushroom_present(all_objects)
+    all_mushrooms = all_objects["Mushrooms"]
+    current_location = Matrix.two_to_one(@x_location, @y_location, @x_size)
+    all_mushrooms.each do |mushroom|
+      if Matrix.two_to_one(mushroom.get_x_location, mushroom.get_y_location, @x_size) == current_location
+        return true
+      end
+    end
+    false
   end
 
   def nearest_strawberry(all_objects)
@@ -216,13 +352,137 @@ class Person < Creature
     all_strawberries = all_objects["Strawberries"]
     all_strawberries.each do |strawberry|
       distance = Matrix.euclidean_distance(self, strawberry)
-      puts distance
       if distance < min_distance
         nearest_strawberry = strawberry
         min_distance = distance
       end
     end
-    [nearest_strawberry.get_x_location, nearest_strawberry.get_y_location]
+    nearest_strawberry
+  end
+
+  def nearest_mushroom(all_objects)
+    min_distance = @x_size * @y_size #Can never be larger than the size of the world
+    nearest_mushroom = nil
+    all_mushrooms = all_objects["Mushrooms"]
+    all_mushrooms.each do |mushroom|
+      distance = Matrix.euclidean_distance(self, mushroom)
+      if distance < min_distance
+        nearest_mushroom = mushroom
+        min_distance = distance
+      end
+    end
+    nearest_mushroom
+  end
+
+  def nearest_monster(all_objects)
+    min_distance = @x_size * @y_size #Can never be larger than the size of the world
+    nearest_monster = nil
+    all_monsters = all_objects["Monsters"]
+    all_monsters.each do |monster|
+      distance = Matrix.euclidean_distance(self, monster)
+      if distance < min_distance
+        nearest_monster = monster
+        min_distance = distance
+      end
+    end
+    nearest_monster
+  end
+
+  def nearest_person(all_objects)
+    min_distance = @x_size * @y_size #Can never be larger than the size of the world
+    nearest_person = nil
+    all_persons = all_objects["Persons"]
+    all_persons.each do |person|
+      if person != self
+        distance = Matrix.euclidean_distance(self, person)
+        if distance < min_distance
+          nearest_person = person
+          min_distance = distance
+        end
+      end
+    end
+    nearest_person
+  end
+
+  # Main function for executing a person's action
+  def move(world_array, all_objects)
+    # Find the most weighted applicable position in the chromosome
+    role = best_role(all_objects)
+    # Get the action corresponding to this position
+    action = get_action(role)
+    @energy_level -= 1
+    action
+  end
+
+  def get_action(role)
+    if role
+      action = @chromosome.get_sequence[role][0]
+    else
+      action = 'random'
+    end
+    # ex: [3, 'towards']
+    [role, action]
+  end
+
+  def best_role(all_objects)
+    max_weight = 0
+    role = nil
+    if strawberry_present(all_objects)
+      new_weight = @chromosome.get_strawb_present_weight
+      if new_weight > max_weight
+        max_weight = new_weight
+        role = 1
+      end
+    end
+
+    if mushroom_present(all_objects)
+      new_weight = @chromosome.get_mush_present_weight
+      if new_weight > max_weight
+        max_weight = new_weight
+        role = 2
+      end
+    end
+
+    if !all_objects["Strawberries"].empty?
+      if Matrix.euclidean_distance(self, nearest_strawberry(all_objects)) < 3
+        new_weight = @chromosome.get_nearest_strawb_weight
+        if new_weight > max_weight
+          max_weight = new_weight
+          role = 3
+        end
+      end
+    end
+
+    if !all_objects["Mushrooms"].empty?
+      if Matrix.euclidean_distance(self, nearest_mushroom(all_objects)) < 3
+        new_weight = @chromosome.get_nearest_mush_weight
+        if new_weight > max_weight
+          max_weight = new_weight
+          role = 4
+        end
+      end
+    end
+
+    if !all_objects["Monsters"].empty?
+      if Matrix.euclidean_distance(self, nearest_monster(all_objects)) < 3
+        new_weight = @chromosome.get_nearest_monster_weight
+        if new_weight > max_weight
+          max_weight = new_weight
+          role = 5
+        end
+      end
+    end
+
+    if !all_objects["Persons"].reject! { |elem| elem != self }.nil?
+      if Matrix.euclidean_distance(self, nearest_person(all_objects)) < 3
+        new_weight = @chromosome.get_nearest_person_weight
+        if new_weight > max_weight
+          max_weight = new_weight
+          role = 6
+        end
+      end
+    end
+    role
   end
 end
 
