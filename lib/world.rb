@@ -14,7 +14,7 @@ class World
     @y_size = y_size
     @total_length = x_size * y_size
     @coords_used = []
-    @all_persons     = Array.new
+    @all_persons      = Array.new
     @all_monsters     = Array.new
     @all_mushrooms    = Array.new
     @all_strawberries = Array.new
@@ -48,7 +48,8 @@ class World
       if @manual_movement
         puts do_manual
       end
-      person.move_random(get_world_array)
+      # person.move_random(get_world_array)
+      person.move(get_world_array, all_objects)
       present_objects = get_objects_at_coord(person.get_x_location, person.get_y_location)
       if !present_objects.nil?
         present_objects.each do |object|
@@ -106,6 +107,15 @@ class World
       end
     end
     display_world
+  end
+
+  def all_objects
+    objects = {
+    "Strawberries" => get_strawberries,
+    "Mushrooms"    => get_mushrooms,
+    "Monsters"     => get_monsters,
+    "Persons"      => get_persons
+    }
   end
 
   def get_strawberries
@@ -222,7 +232,7 @@ class World
   def add_strawberry_coordinate(x_coord, y_coord)
     strawberry_exists = false
     @all_strawberries.each do |strawberry|
-      if Matrix.two_to_one(strawberry.x_location, strawberry.y_location, @x_size) == Matrix.two_to_one(x_coord, y_coord, @x_size)
+      if Matrix.two_to_one(strawberry.get_x_location, strawberry.get_y_location , @x_size) == Matrix.two_to_one(x_coord, y_coord, @x_size)
         strawberry.increment
         strawberry_exists = true
       end

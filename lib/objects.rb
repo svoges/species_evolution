@@ -228,7 +228,35 @@ class Person < Creature
     @energy_level -= 1
   end
 
-  def nearest_strawberry
+  def move(world_array, all_objects)
+    good_movement = false
+    while !good_movement
+      strawb = nearest_strawberry(all_objects)
+      if strawb[0] < @x_location
+        move_west(world_array)
+        good_movement = true
+      end
+    end
+  end
+
+  def nearest_strawberry(all_objects)
+    min_distance = @x_size * @y_size #Can never be larger than the size of the world
+    nearest_strawberry = nil
+    all_strawberries = all_objects["Strawberries"]
+    all_strawberries.each do |strawberry|
+      distance = euclidean_distance(self, strawberry)
+      puts distance
+      if distance < min_distance
+        nearest_strawberry = strawberry
+        min_distance = distance
+      end
+    end
+    [nearest_strawberry.get_x_location, nearest_strawberry.get_y_location]
+  end
+
+  # Finds distance from obj1 to obj2
+  def euclidean_distance(obj1, obj2)
+    Math.sqrt((obj1.get_x_location - obj2.get_x_location) ** 2 + (obj1.get_y_location - obj2.get_y_location) ** 2)
   end
 end
 
