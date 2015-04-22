@@ -73,4 +73,9 @@ module Matrix
   def Matrix.two_to_one(x_coord, y_coord, x_size)
     x_size * y_coord + x_coord
   end
+
+  # Finds distance from obj1 to obj2
+  def Matrix.euclidean_distance(obj1, obj2)
+    Math.sqrt((obj1.get_x_location - obj2.get_x_location) ** 2 + (obj1.get_y_location - obj2.get_y_location) ** 2)
+  end
 end
