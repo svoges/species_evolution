@@ -273,6 +273,51 @@ class Monster < Creature
   def get_representation
     'M'
   end
+
+  def nearest_person(all_objects)
+    nearest_person = nil
+    min_distance = @x_size * @y_size
+    all_persons = all_objects["Persons"]
+    all_persons.each do |person|
+      distance = euclidean_distance(self, person)
+      if distance < min_distance
+        nearest_person = person
+        min_distance = distance
+      end
+    end
+    if nearest_person.nil?
+      puts 'NO MORE PEOPLE'
+    end
+    nearest_person
+  end
+
+  def move(world_array, all_objects)
+    target_person = nearest_person(all_objects)
+    if target_person
+      if target_person.get_x_location < @x_location
+        if can_move_west(world_array)
+          move_west(world_array)
+        end
+      elsif target_person.get_x_location > @x_location
+        if can_move_east(world_array)
+          move_east(world_array)
+        end
+      elsif target_person.get_y_location < @y_location
+        if can_move_north(world_array)
+          move_north(world_array)
+        end
+      elsif target_person.get_y_location > @y_location
+        if can_move_south(world_array)
+          move_south(world_array)
+        end
+      else
+        puts 'PERSON ON MONSTER TILE'
+      end
+    else
+      move_random(world_array)
+    end
+  end
+
 end
 
 class Food

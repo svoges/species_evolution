@@ -87,7 +87,7 @@ class World
       if @manual_movement
         do_manual
       end
-      monster.move_random(get_world_array)
+      monster.move(get_world_array, all_objects)
       present_objects = get_objects_at_coord(monster.get_x_location, monster.get_y_location)
       if !present_objects.nil?
         present_objects.each do |object|

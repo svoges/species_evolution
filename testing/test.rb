@@ -275,6 +275,15 @@ def test_euclid
   nearest_strawberry(arr)
 end
 
+def find_creature
+  world = World.new(10, 1, false, false)
+  world.add_monster_coordinate(3, 0)
+  world.add_person_coordinate(0, 0)
+  world.add_person_coordinate(9, 0)
+  world.display_world
+  world.do_iteration
+  assert(world.get_objects_at_coord(2, 0)[0].class == Monster, "monster moved in wrong direction")
+end
 
 def run_tests
   # test_world
@@ -298,7 +307,8 @@ def run_tests
   # energy_drop
   # prune_array
   # test_euclid
-  nearest_strawb
+  # nearest_strawb
+  find_creature
 end
 
 run_tests
