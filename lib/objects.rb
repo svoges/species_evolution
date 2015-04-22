@@ -173,6 +173,7 @@ class Creature
       elsif movement == 3 and can_move_east(world_array)
         move_east(world_array)
       elsif no_possible_moves(world_array)
+        puts "NO POSSIBLE MOVES"
         # do nothing
       else
         good_movement = false
@@ -180,7 +181,6 @@ class Creature
     end
   end
 end
-
 
 class Person < Creature
   def initialize(x, y, x_size, y_size)
@@ -205,38 +205,9 @@ class Person < Creature
     @energy_level += 2
   end
 
-  def move_random(world_array)
-    good_movement = false
-    while !good_movement
-      movement = rand(4)
-      good_movement = true
-      if movement == 0 and can_move_south(world_array)
-        move_south(world_array)
-      elsif movement == 1 and can_move_west(world_array)
-        move_west(world_array)
-      elsif movement == 2 and can_move_north(world_array)
-        move_north(world_array)
-      elsif movement == 3 and can_move_east(world_array)
-        move_east(world_array)
-      elsif no_possible_moves(world_array)
-        puts "NO POSSIBLE MOVES"
-        # do nothing
-      else
-        good_movement = false
-      end
-    end
-    @energy_level -= 1
-  end
-
   def move(world_array, all_objects)
-    good_movement = false
-    while !good_movement
-      strawb = nearest_strawberry(all_objects)
-      if strawb[0] < @x_location
-        move_west(world_array)
-        good_movement = true
-      end
-    end
+    move_random(world_array)
+    @energy_level -= 1
   end
 
   def nearest_strawberry(all_objects)
@@ -244,7 +215,7 @@ class Person < Creature
     nearest_strawberry = nil
     all_strawberries = all_objects["Strawberries"]
     all_strawberries.each do |strawberry|
-      distance = euclidean_distance(self, strawberry)
+      distance = Matrix.euclidean_distance(self, strawberry)
       puts distance
       if distance < min_distance
         nearest_strawberry = strawberry
@@ -252,11 +223,6 @@ class Person < Creature
       end
     end
     [nearest_strawberry.get_x_location, nearest_strawberry.get_y_location]
-  end
-
-  # Finds distance from obj1 to obj2
-  def euclidean_distance(obj1, obj2)
-    Math.sqrt((obj1.get_x_location - obj2.get_x_location) ** 2 + (obj1.get_y_location - obj2.get_y_location) ** 2)
   end
 end
 
@@ -279,7 +245,7 @@ class Monster < Creature
     min_distance = @x_size * @y_size
     all_persons = all_objects["Persons"]
     all_persons.each do |person|
-      distance = euclidean_distance(self, person)
+      distance = Matrix.euclidean_distance(self, person)
       if distance < min_distance
         nearest_person = person
         min_distance = distance
@@ -317,7 +283,6 @@ class Monster < Creature
       move_random(world_array)
     end
   end
-
 end
 
 class Food
