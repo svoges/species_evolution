@@ -230,6 +230,52 @@ def energy_drop
   assert(world.get_persons.empty?, "person did not die")
 end
 
+def prune_array
+  arr = Array.new
+  arr.push(1, 2, 3)
+  arr.push('four')
+  arr.reject! { |elem| elem.class != 1.class }
+  puts arr
+end
+
+def nearest_strawb
+  world = World.new(5, 1, false, false)
+  world.add_person_coordinate(1, 0)
+  world.add_strawberry_coordinate(0, 0)
+  world.add_strawberry_coordinate(4, 0)
+  world.display_world
+  world.do_iteration
+  assert(world.get_objects_at_coord(0, 0)[1].class == Person, "Person moved in incorrect direction")
+end
+
+def euclidean_distance(obj1, obj2)
+  Math.sqrt((obj1.get_x_location - obj2.get_x_location) ** 2 + (obj1.get_y_location - obj2.get_y_location) ** 2)
+end
+
+def nearest_strawberry(world_array)
+  person = Person.new(1, 0, 5, 5)
+  all_strawberries = world_array.reject { |elem| elem.class != Strawberry }
+  min_distance = 1000 #Can never be larger than the size of the world
+  nearest_strawberry = nil
+  all_strawberries.each do |strawberry|
+    distance = euclidean_distance(person, strawberry)
+    puts distance
+    if distance < min_distance
+      nearest_strawberry = strawberry
+      min_distance = distance
+    end
+  end
+  [nearest_strawberry.get_x_location, nearest_strawberry.get_y_location]
+end
+
+def test_euclid
+  strawb1 = Strawberry.new(0, 0)
+  strawb2 = Strawberry.new(4, 0)
+  arr = [strawb1, strawb2]
+  nearest_strawberry(arr)
+end
+
+
 def run_tests
   # test_world
   # test_best_object
@@ -249,7 +295,10 @@ def run_tests
   # person_movement
   # no_movement
   # monster_strawb
-  energy_drop
+  # energy_drop
+  # prune_array
+  # test_euclid
+  nearest_strawb
 end
 
 run_tests
