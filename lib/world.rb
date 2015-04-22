@@ -48,8 +48,8 @@ class World
       if @manual_movement
         puts do_manual
       end
-      # person.move_random(get_world_array)
-      person.move(get_world_array, all_objects)
+      person.move_random(get_world_array)
+      # person.move(get_world_array, all_objects)
       present_objects = get_objects_at_coord(person.get_x_location, person.get_y_location)
       if !present_objects.nil?
         present_objects.each do |object|
