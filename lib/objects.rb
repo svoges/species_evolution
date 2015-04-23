@@ -194,6 +194,10 @@ class Chromosome
     }
   end
 
+  def set_position(position, value)
+    @sequence[position] = value
+  end
+
   def get_sequence
     @sequence
   end
@@ -415,12 +419,11 @@ class Person < Creature
 
   def get_action(role)
     if role
-      action = @chromosome.get_sequence[role][0]
+      return [role, @chromosome.get_sequence[role][0]]
     else
-      action = 'random'
+      return [role, 'random']
     end
     # ex: [3, 'towards']
-    [role, action]
   end
 
   def best_role(all_objects)

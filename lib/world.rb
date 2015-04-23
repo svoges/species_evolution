@@ -49,7 +49,9 @@ class World
         puts do_manual
       end
       action = person.move(get_world_array, all_objects)
+      puts '----'
       puts action
+      puts '----'
       if action[1] == 'eat'
         present_objects = get_objects_at_coord(person.get_x_location, person.get_y_location)
         present_objects.each do |food|

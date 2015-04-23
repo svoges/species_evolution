@@ -324,7 +324,6 @@ def mushroom_behavior
   world = World.new(2, 2, false, false)
   world.add_person_coordinate(0, 0)
   world.add_mushroom_coordinate(0, 1)
-  world.display_world
   puts "---"
   puts world.get_persons[0].get_chromosome.get_sequence[4]
   puts "---"
@@ -332,6 +331,20 @@ def mushroom_behavior
   world.do_iteration
   world.do_iteration
   world.do_iteration
+end
+
+def monster_behavior
+  world = World.new(5, 5, false, false)
+  world.add_person
+  world.add_monster
+  world.get_persons[0].get_chromosome.set_position(5, ['away_from', 100])
+  puts "---"
+  puts world.get_persons[0].get_chromosome.get_sequence[5]
+  puts "---"
+  world.display_world
+  while world.get_persons.size > 0
+    world.do_iteration
+  end
 end
 
 def run_tests
@@ -362,7 +375,8 @@ def run_tests
   # new_person_creation
   # strawberry_behavior
   # strawb_behavior_2
-  mushroom_behavior
+  # mushroom_behavior
+  monster_behavior
 end
 
 run_tests
