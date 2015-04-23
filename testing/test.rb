@@ -320,6 +320,20 @@ def new_person_creation
   puts person.get_chromosome.get_sequence
 end
 
+def mushroom_behavior
+  world = World.new(2, 2, false, false)
+  world.add_person_coordinate(0, 0)
+  world.add_mushroom_coordinate(0, 1)
+  world.display_world
+  puts "---"
+  puts world.get_persons[0].get_chromosome.get_sequence[4]
+  puts "---"
+  world.display_world
+  world.do_iteration
+  world.do_iteration
+  world.do_iteration
+end
+
 def run_tests
   # test_world
   # test_best_object
@@ -347,7 +361,8 @@ def run_tests
   # chromosome_initialize
   # new_person_creation
   # strawberry_behavior
-  strawb_behavior_2
+  # strawb_behavior_2
+  mushroom_behavior
 end
 
 run_tests
