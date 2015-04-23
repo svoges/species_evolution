@@ -72,6 +72,7 @@ class World
               if food.get_amount <= 0
                 @all_mushrooms.delete(food)
               end
+              puts "Person ate mushroom on square (#{person.get_x_location}, #{person.get_y_location})"
             else
               puts "cannot eat #{food.class}"
             end
@@ -120,6 +121,14 @@ class World
       if person.get_energy_level <= 0
         persons_to_delete.push(person)
       end
+
+      present_objects = get_objects_at_coord(person.get_x_location, person.get_y_location)
+      present_objects.each do |object|
+        if object.class == Monster
+          persons_to_delete.push(person)
+          puts "Person touched monster on square (#{person.get_x_location}, #{person.get_y_location})"
+        end
+      end
     end
     persons_to_delete.each do |person_to_delete|
       @all_persons.delete(person_to_delete)
@@ -141,6 +150,7 @@ class World
                 # do nothing
               elsif object.class == Person
                 @all_persons.delete(object)
+                puts "Person touched monster on square (#{monster.get_x_location}, #{monster.get_y_location})"
               else
                 puts 'UNIDENTIFIED MONSTER OBJECT'
                 exit
@@ -153,6 +163,7 @@ class World
     if @iteration % @strawberry_iteration == 0
       add_strawberry
     end
+    puts @all_persons
     display_world
   end
 

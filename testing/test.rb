@@ -362,6 +362,16 @@ def person_behavior
   end
 end
 
+def person_die_monster
+  world = World.new(2, 1, false, false)
+  world.add_person
+  world.add_monster
+  world.display_world
+  world.do_iteration
+  world.do_iteration
+  assert(world.get_persons.empty?, "person didn't die")
+end
+
 def run_tests
   # test_world
   # test_best_object
@@ -388,12 +398,13 @@ def run_tests
   # find_creature
   # chromosome_initialize
   # new_person_creation
-  strawberry_behavior
+  # strawberry_behavior
   # strawb_behavior_2
   # mushroom_behavior
   # monster_behavior
   # person_behavior
   # monster_behavior
+  person_die_monster
 end
 
 run_tests
