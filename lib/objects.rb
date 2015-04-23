@@ -475,8 +475,10 @@ class Person < Creature
       end
     end
 
-    if !all_objects["Persons"].reject! { |elem| elem != self }.nil?
-      if Matrix.euclidean_distance(self, nearest_person(all_objects)) < 3
+    all_people = all_objects["Persons"].reject { |person| person == self }
+    if !all_people.empty?
+      closest_person = nearest_person(all_objects)
+      if Matrix.euclidean_distance(self, closest_person) < 3
         new_weight = @chromosome.get_nearest_person_weight
         if new_weight > max_weight
           max_weight = new_weight

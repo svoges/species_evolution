@@ -347,6 +347,20 @@ def monster_behavior
   end
 end
 
+def person_behavior
+  world = World.new(5, 5, false, false)
+  world.add_person
+  world.add_person
+  puts "---"
+  puts world.get_persons[0].get_chromosome.get_sequence[6]
+  puts world.get_persons[1].get_chromosome.get_sequence[6]
+  puts "---"
+  world.display_world
+  while world.get_persons.size > 0
+    world.do_iteration
+  end
+end
+
 def run_tests
   # test_world
   # test_best_object
@@ -376,7 +390,8 @@ def run_tests
   # strawberry_behavior
   # strawb_behavior_2
   # mushroom_behavior
-  monster_behavior
+  # monster_behavior
+  person_behavior
 end
 
 run_tests
