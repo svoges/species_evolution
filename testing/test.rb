@@ -285,6 +285,93 @@ def find_creature
   assert(world.get_objects_at_coord(2, 0)[0].class == Monster, "monster moved in wrong direction")
 end
 
+def chromosome_initialize
+  chr = Chromosome.new
+  puts chr.get_sequence
+end
+
+def strawberry_behavior
+  world = World.new(8, 8, false, false)
+  world.add_person
+  world.get_persons[0].get_chromosome.set_position(3, ['towards', 80])
+  world.get_persons[0].get_chromosome.set_position(1, ['eat', 100])
+  world.add_strawberry
+  world.display_world
+  (0..50).each do
+    world.do_iteration
+  end
+end
+
+def strawb_behavior_2
+  world = World.new(1, 2, false, false)
+  world.add_person_coordinate(0, 0)
+  world.add_strawberry_coordinate(0, 1)
+  world.display_world
+  world.add_strawberry_coordinate(0, 1)
+  puts "---"
+  puts world.get_persons[0].get_chromosome.get_sequence[3]
+  puts "---"
+  world.display_world
+  world.do_iteration
+  world.do_iteration
+end
+
+def new_person_creation
+  person = Person.new(1, 2, 3, 4)
+  puts person.get_chromosome.get_sequence
+end
+
+def mushroom_behavior
+  world = World.new(2, 2, false, false)
+  world.add_person_coordinate(0, 0)
+  world.add_mushroom_coordinate(0, 1)
+  puts "---"
+  puts world.get_persons[0].get_chromosome.get_sequence[4]
+  puts "---"
+  world.display_world
+  world.do_iteration
+  world.do_iteration
+  world.do_iteration
+end
+
+def monster_behavior
+  world = World.new(5, 5, false, false)
+  world.add_person
+  world.add_monster
+  world.get_persons[0].get_chromosome.set_position(5, ['away_from', 100])
+  puts "---"
+  puts world.get_persons[0].get_chromosome.get_sequence[5]
+  puts "---"
+  world.display_world
+  while world.get_persons.size > 0
+    world.do_iteration
+  end
+end
+
+def person_behavior
+  world = World.new(5, 5, false, false)
+  world.add_person
+  world.add_person
+  puts "---"
+  puts world.get_persons[0].get_chromosome.get_sequence[6]
+  puts world.get_persons[1].get_chromosome.get_sequence[6]
+  puts "---"
+  world.display_world
+  while world.get_persons.size > 0
+    world.do_iteration
+  end
+end
+
+def person_die_monster
+  world = World.new(2, 1, false, false)
+  world.add_person
+  world.add_monster
+  world.display_world
+  world.do_iteration
+  world.do_iteration
+  assert(world.get_persons.empty?, "person didn't die")
+end
+
 def run_tests
   # test_world
   # test_best_object
@@ -308,7 +395,16 @@ def run_tests
   # prune_array
   # test_euclid
   # nearest_strawb
-  find_creature
+  # find_creature
+  # chromosome_initialize
+  # new_person_creation
+  # strawberry_behavior
+  # strawb_behavior_2
+  # mushroom_behavior
+  # monster_behavior
+  # person_behavior
+  # monster_behavior
+  person_die_monster
 end
 
 run_tests
