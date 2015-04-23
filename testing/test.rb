@@ -293,12 +293,26 @@ end
 def strawberry_behavior
   world = World.new(2, 2, false, false)
   world.add_person
-  puts world.get_persons[0].get_chromosome.get_sequence
+  puts world.get_persons[0].get_chromosome.get_sequence[3]
   world.add_strawberry
   world.display_world
   (0..5).each do
     world.do_iteration
   end
+end
+
+def strawb_behavior_2
+  world = World.new(1, 2, false, false)
+  world.add_person_coordinate(0, 0)
+  world.add_strawberry_coordinate(0, 1)
+  world.display_world
+  world.add_strawberry_coordinate(0, 1)
+  puts "---"
+  puts world.get_persons[0].get_chromosome.get_sequence[3]
+  puts "---"
+  world.display_world
+  world.do_iteration
+  world.do_iteration
 end
 
 def new_person_creation
@@ -332,7 +346,8 @@ def run_tests
   # find_creature
   # chromosome_initialize
   # new_person_creation
-  strawberry_behavior
+  # strawberry_behavior
+  strawb_behavior_2
 end
 
 run_tests

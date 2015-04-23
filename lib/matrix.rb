@@ -78,4 +78,9 @@ module Matrix
   def Matrix.euclidean_distance(obj1, obj2)
     Math.sqrt((obj1.get_x_location - obj2.get_x_location) ** 2 + (obj1.get_y_location - obj2.get_y_location) ** 2)
   end
+
+  # Finds distance, but obj1 = [x1, y1] and obj2 = [x2, y2]
+  def Matrix.coord_euclidean_distance(obj1, obj2)
+    Math.sqrt((obj1[0] - obj2[0]) ** 2 + (obj1[1] - obj2[1]) ** 2)
+  end
 end

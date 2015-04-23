@@ -282,45 +282,44 @@ class Person < Creature
   # See the monster example for nearest person as a template
   def move_towards(world_array, target)
     if target
-      if target.get_x_location < @x_location
-        if can_move_west(world_array)
-          move_west(world_array)
-        end
-      elsif target.get_x_location > @x_location
-        if can_move_east(world_array)
-          move_east(world_array)
-        end
-      elsif target.get_y_location < @y_location
-        if can_move_north(world_array)
-          move_north(world_array)
-        end
-      elsif target.get_y_location > @y_location
-        if can_move_south(world_array)
-          move_south(world_array)
-        end
+      current_distance = Matrix.euclidean_distance(self, target)
+      target_coords = [target.get_x_location, target.get_y_location]
+      if can_move_east(world_array) and Matrix.coord_euclidean_distance([@x_location + 1, @y_location], target_coords) <= current_distance
+        move_east(world_array)
+      elsif can_move_west(world_array) and Matrix.coord_euclidean_distance([@x_location - 1, @y_location], target_coords) <= current_distance
+        move_west(world_array)
+      elsif can_move_north(world_array) and Matrix.coord_euclidean_distance([@x_location, @y_location - 1], target_coords) <= current_distance
+        move_north(world_array)
+      elsif can_move_south(world_array) and Matrix.coord_euclidean_distance([@x_location, @y_location + 1], target_coords) <= current_distance
+        move_south(world_array)
       else
-        puts 'TARGET ON SAME TILE'
+        puts 'Towards: TARGET ON SAME TILE'
       end
     else
-      move_random(world_array)
+      puts 'NO TARGET'
+      move_random
     end
   end
 
+  # increase the euclidean distance
   def away_from(world_array, target)
     if target
-      if target.get_x_location < @x_location and can_move_east(world_array)
+      current_distance = Matrix.euclidean_distance(self, target)
+      target_coords = [target.get_x_location, target.get_y_location]
+      if can_move_east(world_array) and Matrix.coord_euclidean_distance([@x_location + 1, @y_location], target_coords) > current_distance
         move_east(world_array)
-      elsif target.get_x_location > @x_location and can_move_west(world_array)
+      elsif can_move_west(world_array) and Matrix.coord_euclidean_distance([@x_location - 1, @y_location], target_coords) > current_distance
         move_west(world_array)
-      elsif target.get_y_location < @y_location and can_move_south(world_array)
-        move_south(world_array)
-      elsif target.get_y_location > @y_location and can_move_north(world_array)
+      elsif can_move_north(world_array) and Matrix.coord_euclidean_distance([@x_location, @y_location - 1], target_coords) > current_distance
         move_north(world_array)
+      elsif can_move_south(world_array) and Matrix.coord_euclidean_distance([@x_location, @y_location + 1], target_coords) > current_distance
+        move_south(world_array)
       else
-        puts 'TARGET ON SAME TILE'
+        puts 'Cannot move further away from target'
       end
     else
-      move_random(world_array)
+      puts 'NO TARGET'
+      move_random
     end
   end
 

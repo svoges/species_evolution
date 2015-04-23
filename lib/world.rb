@@ -49,6 +49,7 @@ class World
         puts do_manual
       end
       action = person.move(get_world_array, all_objects)
+      puts action
       if action[1] == 'eat'
         present_objects = get_objects_at_coord(person.get_x_location, person.get_y_location)
         present_objects.each do |food|
@@ -105,6 +106,7 @@ class World
           puts "invalid action: #{action}"
         end
       elsif action[1] == 'random'
+        person.move_random(get_world_array)
       else
         puts "#{action} not a valid action"
       end
