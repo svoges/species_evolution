@@ -41,8 +41,6 @@ world = World.new(ARGV[0].to_i, ARGV[1].to_i, manual_movement, manual_iteration)
 # Create creatures
 world.initialize_world
 
-iterations = 50
-while iterations > 0
+while !world.get_persons.empty?
   world.do_iteration
-  iterations -= 1
 end

@@ -291,12 +291,13 @@ def chromosome_initialize
 end
 
 def strawberry_behavior
-  world = World.new(2, 2, false, false)
+  world = World.new(8, 8, false, false)
   world.add_person
-  puts world.get_persons[0].get_chromosome.get_sequence[3]
+  world.get_persons[0].get_chromosome.set_position(3, ['towards', 80])
+  world.get_persons[0].get_chromosome.set_position(1, ['eat', 100])
   world.add_strawberry
   world.display_world
-  (0..5).each do
+  (0..50).each do
     world.do_iteration
   end
 end
@@ -387,11 +388,12 @@ def run_tests
   # find_creature
   # chromosome_initialize
   # new_person_creation
-  # strawberry_behavior
+  strawberry_behavior
   # strawb_behavior_2
   # mushroom_behavior
   # monster_behavior
-  person_behavior
+  # person_behavior
+  # monster_behavior
 end
 
 run_tests

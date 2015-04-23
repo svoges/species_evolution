@@ -284,42 +284,66 @@ class Person < Creature
   end
 
   # See the monster example for nearest person as a template
-  def move_towards(world_array, target)
+  def away_from(world_array, target)
     if target
       current_distance = Matrix.euclidean_distance(self, target)
       target_coords = [target.get_x_location, target.get_y_location]
-      if can_move_east(world_array) and Matrix.coord_euclidean_distance([@x_location + 1, @y_location], target_coords) <= current_distance
-        move_east(world_array)
-      elsif can_move_west(world_array) and Matrix.coord_euclidean_distance([@x_location - 1, @y_location], target_coords) <= current_distance
-        move_west(world_array)
-      elsif can_move_north(world_array) and Matrix.coord_euclidean_distance([@x_location, @y_location - 1], target_coords) <= current_distance
-        move_north(world_array)
-      elsif can_move_south(world_array) and Matrix.coord_euclidean_distance([@x_location, @y_location + 1], target_coords) <= current_distance
-        move_south(world_array)
+
+      distance_east  = Matrix.coord_euclidean_distance([[@x_location + 1, @x_size - 1].min, @y_location], target_coords)
+      distance_west  = Matrix.coord_euclidean_distance([[@x_location - 1, 0].max, @y_location], target_coords)
+      distance_north = Matrix.coord_euclidean_distance([@x_location, [@y_location - 1, 0].max], target_coords)
+      distance_south = Matrix.coord_euclidean_distance([@x_location, [@y_location + 1, @y_size - 1].min], target_coords)
+
+      if current_distance >= [distance_east, distance_south, distance_west, distance_north].max
+        puts "cannot move further away from target"
       else
-        puts 'Towards: TARGET ON SAME TILE'
+        good_movement = false
+        while !good_movement
+          movement = rand(4)
+          if movement == 0
+            if can_move_east(world_array) and distance_east > current_distance
+              move_east(world_array)
+              good_movement = true
+            end
+          elsif movement == 1
+            if can_move_west(world_array) and distance_west > current_distance
+              move_west(world_array)
+              good_movement = true
+            end
+          elsif movement == 2
+            if can_move_north(world_array) and distance_north > current_distance
+              move_north(world_array)
+              good_movement = true
+            end
+          elsif movement == 3
+            if can_move_south(world_array) and distance_south > current_distance
+              move_south(world_array)
+              good_movement = true
+            end
+          end
+        end
       end
     else
-      puts 'NO TARGET'
+      puts "no target"
       move_random
     end
   end
 
   # increase the euclidean distance
-  def away_from(world_array, target)
+  def move_towards(world_array, target)
     if target
       current_distance = Matrix.euclidean_distance(self, target)
       target_coords = [target.get_x_location, target.get_y_location]
-      if can_move_east(world_array) and Matrix.coord_euclidean_distance([@x_location + 1, @y_location], target_coords) > current_distance
+      if can_move_east(world_array) and Matrix.coord_euclidean_distance([@x_location + 1, @y_location], target_coords) < current_distance
         move_east(world_array)
-      elsif can_move_west(world_array) and Matrix.coord_euclidean_distance([@x_location - 1, @y_location], target_coords) > current_distance
+      elsif can_move_west(world_array) and Matrix.coord_euclidean_distance([@x_location - 1, @y_location], target_coords) < current_distance
         move_west(world_array)
-      elsif can_move_north(world_array) and Matrix.coord_euclidean_distance([@x_location, @y_location - 1], target_coords) > current_distance
+      elsif can_move_north(world_array) and Matrix.coord_euclidean_distance([@x_location, @y_location - 1], target_coords) < current_distance
         move_north(world_array)
-      elsif can_move_south(world_array) and Matrix.coord_euclidean_distance([@x_location, @y_location + 1], target_coords) > current_distance
+      elsif can_move_south(world_array) and Matrix.coord_euclidean_distance([@x_location, @y_location + 1], target_coords) < current_distance
         move_south(world_array)
       else
-        puts 'Cannot move further away from target'
+        puts 'Cannot move closer to target'
       end
     else
       puts 'NO TARGET'
