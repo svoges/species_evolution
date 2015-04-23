@@ -18,6 +18,9 @@ class World
     @all_monsters     = Array.new
     @all_mushrooms    = Array.new
     @all_strawberries = Array.new
+    @iteration = 0
+    @monster_iteration = 3
+    @strawberry_iteration = 5
   end
 
   def initialize_world
@@ -40,6 +43,8 @@ class World
 
   # Do random movements for the persons at first
   def do_iteration
+    puts "--------#{@iteration}--------"
+    @iteration += 1
     if @manual_iteration
       do_manual
     end
@@ -49,9 +54,6 @@ class World
         puts do_manual
       end
       action = person.move(get_world_array, all_objects)
-      puts '----'
-      puts action
-      puts '----'
       if action[1] == 'eat'
         present_objects = get_objects_at_coord(person.get_x_location, person.get_y_location)
         present_objects.each do |food|
@@ -59,12 +61,14 @@ class World
             if food.class == Strawberry
               person.eat
               food.decrement
+              add_strawberry
               if food.get_amount <= 0
                 @all_strawberries.delete(food)
               end
             elsif food.class == Mushroom
               persons_to_delete.push(person)
               food.decrement
+              add_mushroom
               if food.get_amount <= 0
                 @all_mushrooms.delete(food)
               end
@@ -121,28 +125,33 @@ class World
       @all_persons.delete(person_to_delete)
     end
 
-    @all_monsters.each do |monster|
-      if @manual_movement
-        do_manual
-      end
-      monster.move(get_world_array, all_objects)
-      present_objects = get_objects_at_coord(monster.get_x_location, monster.get_y_location)
-      if !present_objects.nil?
-        present_objects.each do |object|
-          if object != monster
-            if object.class == Strawberry
-              # do nothing
-            elsif object.class == Mushroom
-              # do nothing
-            elsif object.class == Person
-              @all_persons.delete(object)
-            else
-              puts 'UNIDENTIFIED MONSTER OBJECT'
-              exit
+    if @iteration % @monster_iteration == 0
+      @all_monsters.each do |monster|
+        if @manual_movement
+          do_manual
+        end
+        monster.move(get_world_array, all_objects)
+        present_objects = get_objects_at_coord(monster.get_x_location, monster.get_y_location)
+        if !present_objects.nil?
+          present_objects.each do |object|
+            if object != monster
+              if object.class == Strawberry
+                # do nothing
+              elsif object.class == Mushroom
+                # do nothing
+              elsif object.class == Person
+                @all_persons.delete(object)
+              else
+                puts 'UNIDENTIFIED MONSTER OBJECT'
+                exit
+              end
             end
           end
         end
       end
+    end
+    if @iteration % @strawberry_iteration == 0
+      add_strawberry
     end
     display_world
   end

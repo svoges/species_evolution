@@ -263,7 +263,7 @@ class Person < Creature
     @y_size = y_size
     @total_length = x_size * y_size
     @type = 'Person'
-    @energy_level = 10
+    @energy_level = 20
     @chromosome = Chromosome.new
   end
 
@@ -538,9 +538,6 @@ class Monster < Creature
         nearest_person = person
         min_distance = distance
       end
-    end
-    if nearest_person.nil?
-      puts 'NO MORE PEOPLE'
     end
     nearest_person
   end

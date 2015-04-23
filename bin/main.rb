@@ -27,13 +27,6 @@ elsif ARGV[0].to_i > 0 and ARGV[1].to_i > 0
   if ARGV.include?('-m')
     manual_movement = true
   end
-  if ARGV.include?('-v')
-    Shoes.app do
-      flow do
-        button 'push me'
-      end
-    end
-  end
   world = World.new(ARGV[0].to_i, ARGV[1].to_i, manual_movement, manual_iteration)
 end
 world = World.new(ARGV[0].to_i, ARGV[1].to_i, manual_movement, manual_iteration)
