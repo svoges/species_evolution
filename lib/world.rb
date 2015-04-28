@@ -24,10 +24,17 @@ class World
   end
 
   def initialize_world
-    (0..2).each { add_person }
-    (0..2).each { add_monster }
-    (0..1).each { add_strawberry }
-    (0..1).each { add_mushroom }
+    if @total_length <= 25
+      (0..2).each { add_person }
+      (0..1).each { add_monster }
+      (0..2).each { add_strawberry }
+      (0..1).each { add_mushroom }
+    else
+      (0..5).each { add_person }
+      (0..3).each { add_monster }
+      (0..8).each { add_strawberry }
+      (0..4).each { add_mushroom }
+    end
     display_world
   end
 
@@ -65,6 +72,7 @@ class World
               if food.get_amount <= 0
                 @all_strawberries.delete(food)
               end
+              puts "Person eats strawberry on square (#{person.get_x_location}, #{person.get_y_location})"
             elsif food.class == Mushroom
               persons_to_delete.push(person)
               food.decrement
@@ -72,7 +80,7 @@ class World
               if food.get_amount <= 0
                 @all_mushrooms.delete(food)
               end
-              puts "Person ate mushroom on square (#{person.get_x_location}, #{person.get_y_location})"
+              puts "Person eats mushroom on square (#{person.get_x_location}, #{person.get_y_location})"
             else
               puts "cannot eat #{food.class}"
             end
@@ -126,7 +134,7 @@ class World
       present_objects.each do |object|
         if object.class == Monster
           persons_to_delete.push(person)
-          puts "Person moved to monster on square (#{person.get_x_location}, #{person.get_y_location})"
+          puts "Person moves to monster on square (#{person.get_x_location}, #{person.get_y_location})"
         end
       end
     end
@@ -150,7 +158,7 @@ class World
                 # do nothing
               elsif object.class == Person
                 @all_persons.delete(object)
-                puts "Monster ate person on square (#{monster.get_x_location}, #{monster.get_y_location})"
+                puts "Monster eats person on square (#{monster.get_x_location}, #{monster.get_y_location})"
               else
                 puts 'UNIDENTIFIED MONSTER OBJECT'
                 exit
@@ -163,7 +171,6 @@ class World
     if @iteration % @strawberry_iteration == 0
       add_strawberry
     end
-    puts @all_persons
     display_world
   end
 

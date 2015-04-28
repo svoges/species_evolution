@@ -52,7 +52,9 @@ module Matrix
   def Matrix.draw_matrix(array, x_size, y_size)
     print '    '
     (0..[9, x_size-1].min).each { |i| print " #{ i }  "}
-    (10..[10, x_size-1].max).each { |i| print " #{ i } "}
+    if x_size > 10
+      (10..[10, x_size-1].max).each { |i| print " #{ i } "}
+    end
     print "\n    "
     (0..x_size-1).each { |i| print ' *  '}
     puts ''

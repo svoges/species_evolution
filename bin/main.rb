@@ -10,7 +10,7 @@ if ARGV.length < 2
     puts "Usage: ruby [x_location] [y_location] [options]"
     puts "   -i      enable manual printing after each iteration, 'exit' or 'quit' to abort"
     puts "   -m      enable manual printing after each movement, 'exit' or 'quit' to abort"
-    puts "   -v      enable graphical mode"
+    puts "   -g      enable generations mode"
     exit
   else
     puts "ERROR: Need 2 inputs for x and y values of array"
@@ -21,11 +21,17 @@ elsif ARGV[0].to_i > 0 and ARGV[1].to_i > 0
   manual_movement = false
   # if true, allows the user to step through each world iteration
   manual_iteration = false
+  #
+  generations = false
   if ARGV.include?('-i')
     manual_iteration = true
   end
   if ARGV.include?('-m')
     manual_movement = true
+  end
+  if ARGV.include?('-g')
+    puts "Enter for new generation, or exit to quit"
+    generations = true
   end
   world = World.new(ARGV[0].to_i, ARGV[1].to_i, manual_movement, manual_iteration)
 end
@@ -34,6 +40,19 @@ world = World.new(ARGV[0].to_i, ARGV[1].to_i, manual_movement, manual_iteration)
 # Create creatures
 world.initialize_world
 
-while !world.get_persons.empty?
-  world.do_iteration
+if generations
+  iterations = 25
+  STDOUT.flush
+  next_gen = STDIN.gets.chomp
+  if next_gen == "quit" or next_gen == "exit"
+    exit
+  end
+  while iterations > 0
+    world.do_iteration
+    iterations -= 1
+  end
+else
+  while !world.get_persons.empty?
+    world.do_iteration
+  end
 end
