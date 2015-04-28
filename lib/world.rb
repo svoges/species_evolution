@@ -19,27 +19,54 @@ class World
     @all_strawberries = Array.new
     @iteration = 0
     @monster_iteration = 3
+
+    @total_people = 0
   end
 
-  def initialize_world
+  def populate
     if @total_length <= 25
-      (0..2).each { add_person }
-      (0..1).each { add_monster }
-      (0..2).each { add_strawberry }
-      (0..1).each { add_mushroom }
+      while get_persons.size < 3
+        add_person
+      end
+      while get_monsters.size < 2
+        add_monster
+      end
+      while get_strawberries.size < 3
+        add_strawberry
+      end
+      while get_mushrooms.size < 2
+        add_mushroom
+      end
     elsif @total_length <= 50
-      (0..5).each { add_person }
-      (0..2).each { add_monster }
-      (0..4).each { add_strawberry }
-      (0..2).each { add_mushroom }
+      while get_persons.size < 6
+        add_person
+      end
+      while get_monsters.size < 3
+        add_monster
+      end
+      while get_strawberries.size < 5
+        add_strawberry
+      end
+      while get_mushrooms.size < 3
+        add_mushroom
+      end
     else
-      (0..8).each { add_person }
-      (0..4).each { add_monster }
-      (0..15).each { add_strawberry}
-      (0..4).each { add_mushroom }
+      while get_persons.size < 9
+        add_person
+      end
+      while get_monsters.size < 5
+        add_monster
+      end
+      while get_strawberries.size < 16
+        add_strawberry
+      end
+      while get_mushrooms.size < 5
+        add_mushroom
+      end
     end
     display_world
   end
+
 
   def do_manual
     display_world
@@ -183,11 +210,6 @@ class World
     }
   end
 
-  # Split the chromosomes in half and choose from existing people.  Possibly
-  # introduce a mutation
-  def merge_people(person_one, person_two)
-  end
-
   def get_strawberries
     @all_strawberries
   end
@@ -247,6 +269,51 @@ class World
 
   def display_world
     Matrix.draw_matrix(get_world_array, @x_size, @y_size)
+  end
+
+  # Clear the world to scratch using initial sizes
+  def clear_world
+    @all_persons.clear
+    @all_monsters.clear
+    @all_strawberries.clear
+    @all_mushrooms.clear
+
+    @iteration = 0
+  end
+
+  # Creates a generation of set size of initial input using tournament selection
+  def create_generation
+    old_persons = Array.new(@all_persons)
+
+    # remember to initialize correctly
+    clear_world
+
+    number_of_people = 0
+    while number_of_people < @total_people
+      sample_one = old_persons.sample(old_persons.size / 3)
+      sample_two = old_persons.sample(old_persons.size / 3)
+
+      parent_one = highest_fitness(sample_one)
+      parent_two = highest_fitness(sample_two)
+
+      coords = get_empty_coords
+
+      new_person = Person.new(coords[0], coords[1], @x_size, @y_size, parent_one.get_chromosome, parent_two.get_chromosome)
+      @all_persons.push(new_person)
+      number_of_people += 1
+    end
+  end
+
+  def highest_fitness(sample_group)
+    best_fitness = 0
+    best_person = nil
+    sample_group.each do |person|
+      if person.get_energy_level > best_fitness
+        best_person = person
+        best_fitness = person.get_energy_level
+      end
+    end
+    best_person
   end
 
   def add_person_coordinate(x_coord, y_coord)

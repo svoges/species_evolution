@@ -183,15 +183,54 @@ class Creature
 end
 
 class Chromosome
-  def initialize
-    @sequence = {
-      1 => [eat_or_ignore, rand(100)],
-      2 => [eat_or_ignore, rand(100)],
-      3 => [movement,      rand(100)],
-      4 => [movement,      rand(100)],
-      5 => [movement,      rand(100)],
-      6 => [movement,      rand(100)]
-    }
+  def initialize(chromosome_one=nil, chromosome_two=nil)
+    if chromosome_one and chromosome_two
+      sequence_one = chromosome_one.get_sequence
+      sequence_two = chromosome_two.get_sequence
+      @sequence = {}
+      position = 1
+      (1..6).each do
+        person = rand(2)
+        if person == 0
+          @sequence[position] = sequence_one[position]
+        else
+          @sequence[position] = sequence_two[position]
+        end
+        position += 1
+      end
+      if introduce_mutation
+        do_mutation
+      end
+    elsif sequence_one or sequence_two
+      puts "ONLY ONE SEQUENCE GIVEN"
+      exit
+    else
+      @sequence = {
+        1 => [eat_or_ignore, rand(100)],
+        2 => [eat_or_ignore, rand(100)],
+        3 => [movement,      rand(100)],
+        4 => [movement,      rand(100)],
+        5 => [movement,      rand(100)],
+        6 => [movement,      rand(100)]
+      }
+    end
+  end
+
+  def do_mutation
+    position = rand(1..6)
+    if position > 2
+      @sequence[position] = [movement, rand(100)]
+    else
+      @sequence[position] = [eat_or_ignore, rand(100)]
+    end
+  end
+
+  def introduce_mutation
+    if rand(3) == 1
+      return true
+    else
+      return false
+    end
   end
 
   def set_position(position, value)
@@ -256,7 +295,7 @@ class Chromosome
 end
 
 class Person < Creature
-  def initialize(x, y, x_size, y_size)
+  def initialize(x, y, x_size, y_size, chromosome_one=nil, chromosome_two=nil)
     @x_location = x
     @y_location = y
     @x_size = x_size
@@ -264,7 +303,7 @@ class Person < Creature
     @total_length = x_size * y_size
     @type = 'Person'
     @energy_level = 25
-    @chromosome = Chromosome.new
+    @chromosome = Chromosome.new(chromosome_one, chromosome_two)
   end
 
   def get_chromosome

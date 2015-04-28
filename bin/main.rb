@@ -37,21 +37,24 @@ elsif ARGV[0].to_i > 0 and ARGV[1].to_i > 0
 end
 world = World.new(ARGV[0].to_i, ARGV[1].to_i, manual_movement, manual_iteration)
 
-# Create creatures
-world.initialize_world
-
 if generations
-  iterations = 25
   STDOUT.flush
-  next_gen = STDIN.gets.chomp
-  if next_gen == "quit" or next_gen == "exit"
-    exit
-  end
-  while iterations > 0
-    world.do_iteration
-    iterations -= 1
+  while next_gen = STDIN.gets.chomp
+    if next_gen == "quit" or next_gen == "exit"
+      exit
+    end
+    puts "=================================================="
+    world.create_generation
+    world.populate
+    iterations = 10
+    while iterations > 0
+      world.do_iteration
+      iterations -= 1
+    end
   end
 else
+  # Create creatures
+  world.populate
   while !world.get_persons.empty?
     world.do_iteration
   end

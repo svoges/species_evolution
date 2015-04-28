@@ -380,6 +380,54 @@ def test1(var)
   puts "test two"
 end
 
+def new_chromosome
+  chromosome_one = Chromosome.new
+  chromosome_two = Chromosome.new
+  puts "1: "
+  puts chromosome_one.get_sequence
+  puts "2: "
+  puts chromosome_two.get_sequence
+  chromosome_three = Chromosome.new(chromosome_one.get_sequence, chromosome_two.get_sequence)
+  puts "3: "
+  puts chromosome_three.get_sequence
+end
+
+def test_mutation
+  chr = Chromosome.new
+  puts chr.get_sequence
+  chr.do_mutation
+  puts chr.get_sequence
+end
+
+def test_clear
+  world = World.new(6, 6, false, false)
+  world.initialize_world
+  world.display_world
+  world.clear_world
+  world.display_world
+  assert(world.get_persons.empty?, "world did not clear properly")
+end
+
+def generations
+  world = World.new(8, 8, false, false)
+  world.initialize_world
+  world.create_generation
+  world.display_world
+end
+
+def repopulate_test
+  world = World.new(8, 8, false, false)
+  world.initialize_world
+  world.create_generation
+  world.populate_world
+end
+
+def new_population
+  world = World.new(8, 8, false, false)
+  world.create_generation
+  world.display_world
+end
+
 def run_tests
   # test_world
   # test_best_object
@@ -413,7 +461,13 @@ def run_tests
   # person_behavior
   # monster_behavior
   # person_die_monster
-  test1("hello")
+  # test1("hello")
+  # new_chromosome
+  # test_mutation
+  # test_clear
+  # generations
+  # repopulate_test
+  new_population
 end
 
 run_tests
