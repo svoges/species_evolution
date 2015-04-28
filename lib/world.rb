@@ -126,7 +126,7 @@ class World
       present_objects.each do |object|
         if object.class == Monster
           persons_to_delete.push(person)
-          puts "Person touched monster on square (#{person.get_x_location}, #{person.get_y_location})"
+          puts "Person moved to monster on square (#{person.get_x_location}, #{person.get_y_location})"
         end
       end
     end
@@ -150,7 +150,7 @@ class World
                 # do nothing
               elsif object.class == Person
                 @all_persons.delete(object)
-                puts "Person touched monster on square (#{monster.get_x_location}, #{monster.get_y_location})"
+                puts "Monster ate person on square (#{monster.get_x_location}, #{monster.get_y_location})"
               else
                 puts 'UNIDENTIFIED MONSTER OBJECT'
                 exit
@@ -174,6 +174,11 @@ class World
     "Monsters"     => get_monsters,
     "Persons"      => get_persons
     }
+  end
+
+  # Split the chromosomes in half and choose from existing people.  Possibly
+  # introduce a mutation
+  def merge_people(person_one, person_two)
   end
 
   def get_strawberries

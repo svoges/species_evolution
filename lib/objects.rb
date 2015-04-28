@@ -267,6 +267,17 @@ class Person < Creature
     @chromosome = Chromosome.new
   end
 
+  def initialize(x, y, x_size, y_size, chromosome)
+    @x_location = x
+    @y_location = y
+    @x_size = x_size
+    @y_size = y_size
+    @total_length = x_size * y_size
+    @type = 'Person'
+    @energy_level = 20
+    @chromosome = chromosome
+  end
+
   def get_chromosome
     @chromosome
   end

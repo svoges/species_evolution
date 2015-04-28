@@ -367,9 +367,17 @@ def person_die_monster
   world.add_person
   world.add_monster
   world.display_world
-  world.do_iteration
-  world.do_iteration
+  world.get_monsters[0].move(world.get_world_array, world.all_objects)
+  world.display_world
   assert(world.get_persons.empty?, "person didn't die")
+end
+
+def test1
+  puts "test one"
+end
+
+def test1(var)
+  puts "test two"
 end
 
 def run_tests
@@ -404,7 +412,8 @@ def run_tests
   # monster_behavior
   # person_behavior
   # monster_behavior
-  person_die_monster
+  # person_die_monster
+  test1("hello")
 end
 
 run_tests
