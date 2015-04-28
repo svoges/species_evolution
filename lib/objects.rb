@@ -297,9 +297,11 @@ class Person < Creature
       if current_distance >= [distance_east, distance_south, distance_west, distance_north].max
         puts "cannot move further away from target"
       else
+        used_movements = []
         good_movement = false
         while !good_movement
           movement = rand(4)
+          used_movements.push(movement)
           if movement == 0
             if can_move_east(world_array) and distance_east > current_distance
               move_east(world_array)
@@ -320,6 +322,10 @@ class Person < Creature
               move_south(world_array)
               good_movement = true
             end
+          end
+          if used_movements.size == 4
+            # ignore and don't move
+            good_movement = true
           end
         end
       end
@@ -574,7 +580,7 @@ class Food
   def initialize(x, y)
     @x_location = x
     @y_location = y
-    @amount = rand(1..4)
+    @amount = rand(1..2)
   end
 
   def get_amount
