@@ -13,14 +13,12 @@ class World
     @x_size = x_size
     @y_size = y_size
     @total_length = x_size * y_size
-    @coords_used = []
     @all_persons      = Array.new
     @all_monsters     = Array.new
     @all_mushrooms    = Array.new
     @all_strawberries = Array.new
     @iteration = 0
     @monster_iteration = 3
-    @strawberry_iteration = 5
   end
 
   def initialize_world
@@ -29,10 +27,15 @@ class World
       (0..1).each { add_monster }
       (0..2).each { add_strawberry }
       (0..1).each { add_mushroom }
-    else
+    elsif @total_length <= 50
       (0..5).each { add_person }
-      (0..3).each { add_monster }
-      (0..8).each { add_strawberry }
+      (0..2).each { add_monster }
+      (0..4).each { add_strawberry }
+      (0..2).each { add_mushroom }
+    else
+      (0..8).each { add_person }
+      (0..4).each { add_monster }
+      (0..15).each { add_strawberry}
       (0..4).each { add_mushroom }
     end
     display_world
@@ -168,9 +171,6 @@ class World
         end
       end
     end
-    if @iteration % @strawberry_iteration == 0
-      add_strawberry
-    end
     display_world
   end
 
@@ -204,22 +204,19 @@ class World
     @all_persons
   end
 
-  def get_coords_used
-    @coords_used
-  end
-
   def get_empty_coords
     good_coords = false
     curr_world = get_world_array
+    objects = all_objects
+    number_of_objects = all_objects["Strawberries"].size + all_objects["Persons"].size + all_objects["Monsters"].size + all_objects["Mushrooms"].size
+    if number_of_objects == @total_length
+      puts 'INPUT BIGGER MATRIX'
+      exit
+    end
     while !good_coords
-      if @total_length == @coords_used.size
-        puts 'INPUT BIGGER MATRIX'
-        exit
-      end
       x_coord = rand(@x_size)
       y_coord = rand(@y_size)
       if curr_world[Matrix.two_to_one(x_coord, y_coord, @x_size)].empty?
-        @coords_used.push([x_coord, y_coord])
         good_coords = true
       end
     end

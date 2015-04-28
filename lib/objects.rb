@@ -263,7 +263,7 @@ class Person < Creature
     @y_size = y_size
     @total_length = x_size * y_size
     @type = 'Person'
-    @energy_level = 20
+    @energy_level = 25
     @chromosome = Chromosome.new
   end
 
@@ -280,7 +280,7 @@ class Person < Creature
   end
 
   def eat
-    @energy_level += 2
+    @energy_level += 10
   end
 
   # See the monster example for nearest person as a template
