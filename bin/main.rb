@@ -1,8 +1,6 @@
 require_relative '../lib/objects.rb'
 require_relative '../lib/matrix.rb'
 require_relative '../lib/world.rb'
-# require 'shoes'
-
 
 if ARGV.length < 2
   if ARGV.include?('-help')
@@ -44,15 +42,15 @@ if generations
     if next_gen == "quit" or next_gen == "exit"
       exit
     end
-    puts "=================================================="
     world.create_generation
+    puts "======================#{world.get_generation}============================"
     world.populate
     iterations = 20
     while iterations > 0
       world.do_iteration
       iterations -= 1
     end
-    world.write_average_fitness
+    world.write_average_fitness('output/output.txt')
     puts "Average fitness after iterations: #{world.average_fitness}"
     puts "Each person's fitness after iterations"
     world.group_fitness
