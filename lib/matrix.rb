@@ -51,14 +51,21 @@ module Matrix
   # Draw a 1-D matrix in 2-D
   def Matrix.draw_matrix(array, x_size, y_size)
     print '    '
-    (0..x_size-1).each { |i| print " #{ i }  "}
+    (0..[9, x_size-1].min).each { |i| print " #{ i }  "}
+    if x_size > 10
+      (10..[10, x_size-1].max).each { |i| print " #{ i } "}
+    end
     print "\n    "
     (0..x_size-1).each { |i| print ' *  '}
     puts ''
     counter = 0
     copied_array = Array.new(array)
     (0..y_size - 1).each do |i|
-      print "#{counter} * "
+      if i < 10
+        print "#{counter} * "
+      else
+        print "#{counter}* "
+      end
       to_print = copied_array.take(x_size)
       draw_line(to_print)
       copied_array.shift(x_size)

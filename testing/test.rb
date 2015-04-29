@@ -367,9 +367,71 @@ def person_die_monster
   world.add_person
   world.add_monster
   world.display_world
-  world.do_iteration
-  world.do_iteration
+  world.get_monsters[0].move(world.get_world_array, world.all_objects)
+  world.display_world
   assert(world.get_persons.empty?, "person didn't die")
+end
+
+def test1
+  puts "test one"
+end
+
+def test1(var)
+  puts "test two"
+end
+
+def new_chromosome
+  chromosome_one = Chromosome.new
+  chromosome_two = Chromosome.new
+  puts "1: "
+  puts chromosome_one.get_sequence
+  puts "2: "
+  puts chromosome_two.get_sequence
+  chromosome_three = Chromosome.new(chromosome_one.get_sequence, chromosome_two.get_sequence)
+  puts "3: "
+  puts chromosome_three.get_sequence
+end
+
+def test_mutation
+  chr = Chromosome.new
+  puts chr.get_sequence
+  chr.do_mutation
+  puts chr.get_sequence
+end
+
+def test_clear
+  world = World.new(6, 6, false, false)
+  world.initialize_world
+  world.display_world
+  world.clear_world
+  world.display_world
+  assert(world.get_persons.empty?, "world did not clear properly")
+end
+
+def generations
+  world = World.new(8, 8, false, false)
+  world.initialize_world
+  world.create_generation
+  world.display_world
+end
+
+def repopulate_test
+  world = World.new(8, 8, false, false)
+  world.initialize_world
+  world.create_generation
+  world.populate_world
+end
+
+def new_population
+  world = World.new(8, 8, false, false)
+  world.create_generation
+  world.display_world
+end
+
+def write_to_file
+  open('output/output.txt', 'a') { |f|
+    f.puts "Hello, world."
+  }
 end
 
 def run_tests
@@ -404,7 +466,15 @@ def run_tests
   # monster_behavior
   # person_behavior
   # monster_behavior
-  person_die_monster
+  # person_die_monster
+  # test1("hello")
+  # new_chromosome
+  # test_mutation
+  # test_clear
+  # generations
+  # repopulate_test
+  # new_population
+  write_to_file
 end
 
 run_tests
