@@ -1,20 +1,5 @@
 module Matrix
-  # Draw a sample line in the matrix
-  # def Matrix.draw_sample_line(length)
-  #   (0..length).each do
-  #     print " + "
-  #   end
-  #   puts "\n"
-  # end
-  #
-  # Display the matrix in ASCII format based on length and width
-  # def Matrix.draw_sample_matrix(x_size, y_size)
-  #   (0..y_size).each do
-  #     draw_sample_line(x_size)
-  #   end
-  # end
-
-  # Returns the best object to show in the array of the matrix location
+  # Returns the best object to show in the array of the matrix location.
   def Matrix.best_object_to_show(object_array)
     best_object = nil
     object_array.each do |object|
@@ -27,7 +12,7 @@ module Matrix
     best_object
   end
 
-  # Draw a line based on a given matrix
+  # Draw a line based on a given matrix.
   def Matrix.draw_line(array)
     array.each do |elem|
       if !elem.empty?
@@ -48,7 +33,7 @@ module Matrix
     puts "\n"
   end
 
-  # Draw a 1-D matrix in 2-D
+  # Draw a 1-D matrix in 2-D.
   def Matrix.draw_matrix(array, x_size, y_size)
     print '    '
     (0..[9, x_size-1].min).each { |i| print " #{ i }  "}
@@ -77,16 +62,17 @@ module Matrix
     puts ''
   end
 
+  # Return the single dimension representation of a 2-D coordinate.
   def Matrix.two_to_one(x_coord, y_coord, x_size)
     x_size * y_coord + x_coord
   end
 
-  # Finds distance from obj1 to obj2
+  # Finds distance from obj1 to obj2.
   def Matrix.euclidean_distance(obj1, obj2)
     Math.sqrt((obj1.get_x_location - obj2.get_x_location) ** 2 + (obj1.get_y_location - obj2.get_y_location) ** 2)
   end
 
-  # Finds distance, but obj1 = [x1, y1] and obj2 = [x2, y2]
+  # Finds distance, but obj1 = [x1, y1] and obj2 = [x2, y2].
   def Matrix.coord_euclidean_distance(obj1, obj2)
     Math.sqrt((obj1[0] - obj2[0]) ** 2 + (obj1[1] - obj2[1]) ** 2)
   end
