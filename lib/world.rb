@@ -20,12 +20,15 @@ class World
     @iteration = 0
     @monster_iteration = 3
 
+    @generation = 0
+
     @total_people = 0
   end
 
   def populate
     if @total_length <= 25
       while get_persons.size < 3
+        @total_people = 3
         add_person
       end
       while get_monsters.size < 2
@@ -39,6 +42,7 @@ class World
       end
     elsif @total_length <= 50
       while get_persons.size < 6
+        @total_people = 6
         add_person
       end
       while get_monsters.size < 3
@@ -50,14 +54,29 @@ class World
       while get_mushrooms.size < 3
         add_mushroom
       end
-    else
+    elsif @total_length <= 100
       while get_persons.size < 9
+        @total_people = 9
         add_person
       end
       while get_monsters.size < 5
         add_monster
       end
       while get_strawberries.size < 16
+        add_strawberry
+      end
+      while get_mushrooms.size < 5
+        add_mushroom
+      end
+    else
+      while get_persons.size < 20
+        @total_people = 20
+        add_person
+      end
+      while get_monsters.size < 5
+        add_monster
+      end
+      while get_strawberries.size < 20
         add_strawberry
       end
       while get_mushrooms.size < 5
@@ -102,7 +121,7 @@ class World
               if food.get_amount <= 0
                 @all_strawberries.delete(food)
               end
-              puts "Person eats strawberry on square (#{person.get_x_location}, #{person.get_y_location})"
+              puts "#{person} eats strawberry on square (#{person.get_x_location}, #{person.get_y_location})"
             elsif food.class == Mushroom
               persons_to_delete.push(person)
               food.decrement
@@ -110,7 +129,7 @@ class World
               if food.get_amount <= 0
                 @all_mushrooms.delete(food)
               end
-              puts "Person eats mushroom on square (#{person.get_x_location}, #{person.get_y_location})"
+              puts "#{person} eats mushroom on square (#{person.get_x_location}, #{person.get_y_location})"
             else
               puts "cannot eat #{food.class}"
             end
@@ -164,7 +183,7 @@ class World
       present_objects.each do |object|
         if object.class == Monster
           persons_to_delete.push(person)
-          puts "Person moves to monster on square (#{person.get_x_location}, #{person.get_y_location})"
+          puts "#{person} moves to monster on square (#{person.get_x_location}, #{person.get_y_location})"
         end
       end
     end
@@ -188,7 +207,7 @@ class World
                 # do nothing
               elsif object.class == Person
                 @all_persons.delete(object)
-                puts "Monster eats person on square (#{monster.get_x_location}, #{monster.get_y_location})"
+                puts "Monster eats #{object} on square (#{monster.get_x_location}, #{monster.get_y_location})"
               else
                 puts 'UNIDENTIFIED MONSTER OBJECT'
                 exit
@@ -288,10 +307,14 @@ class World
     # remember to initialize correctly
     clear_world
 
-    number_of_people = 0
-    while number_of_people < @total_people
-      sample_one = old_persons.sample(old_persons.size / 3)
-      sample_two = old_persons.sample(old_persons.size / 3)
+    best_person = highest_fitness(old_persons)
+    @all_persons.push(best_person) unless best_person.nil?
+
+    puts "best person: #{best_person}"
+
+    while @all_persons.size < @total_people
+      sample_one = old_persons.sample(old_persons.size / 4)
+      sample_two = old_persons.sample(old_persons.size / 4)
 
       parent_one = highest_fitness(sample_one)
       parent_two = highest_fitness(sample_two)
@@ -300,8 +323,8 @@ class World
 
       new_person = Person.new(coords[0], coords[1], @x_size, @y_size, parent_one.get_chromosome, parent_two.get_chromosome)
       @all_persons.push(new_person)
-      number_of_people += 1
     end
+    @generation += 1
   end
 
   def highest_fitness(sample_group)
@@ -314,6 +337,32 @@ class World
       end
     end
     best_person
+  end
+
+  def write_average_fitness
+    open('output/output.txt', 'a') { |f|
+      f.puts "#{@generation} #{average_fitness}\n"
+    }
+  end
+
+  def average_fitness
+    total_fitness = 0
+    @all_persons.each do |person|
+      total_fitness += person.get_energy_level
+    end
+    if @all_persons.empty?
+      return 0
+    else
+      total_fitness / @all_persons.size
+    end
+  end
+
+  def group_fitness
+    unless @all_persons.empty?
+      @all_persons.each do |person|
+        puts "#{person}: #{person.get_energy_level}"
+      end
+    end
   end
 
   def add_person_coordinate(x_coord, y_coord)

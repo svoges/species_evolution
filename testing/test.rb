@@ -428,6 +428,12 @@ def new_population
   world.display_world
 end
 
+def write_to_file
+  open('output/output.txt', 'a') { |f|
+    f.puts "Hello, world."
+  }
+end
+
 def run_tests
   # test_world
   # test_best_object
@@ -467,7 +473,8 @@ def run_tests
   # test_clear
   # generations
   # repopulate_test
-  new_population
+  # new_population
+  write_to_file
 end
 
 run_tests

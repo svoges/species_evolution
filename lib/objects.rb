@@ -226,7 +226,7 @@ class Chromosome
   end
 
   def introduce_mutation
-    if rand(3) == 1
+    if rand(8) == 1
       return true
     else
       return false
