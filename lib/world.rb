@@ -222,7 +222,7 @@ class World
         end
       end
     end
-    display_world
+    # display_world
   end
 
   # Creates a generation of set size of initial input using tournament
@@ -234,9 +234,9 @@ class World
       best_person = highest_fitness(old_persons)
       @all_persons.push(best_person) unless best_person.nil?
       while @all_persons.size < @total_people
-        if old_persons.size >=4
-          sample_one = old_persons.sample(old_persons.size / 4)
-          sample_two = old_persons.sample(old_persons.size / 4)
+        if old_persons.size >=6
+          sample_one = old_persons.sample(old_persons.size / 6)
+          sample_two = old_persons.sample(old_persons.size / 6)
         else
           sample_one = [old_persons.sample]
           sample_two = [old_persons.sample]
