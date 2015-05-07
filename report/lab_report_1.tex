@@ -35,42 +35,28 @@
 %	SECTION 1
 %----------------------------------------------------------------------------------------
 
-\section{Objective}
+\section{Description of Simulation}
+\hspace{10 pt} The main method of the program takes in an unspecified number of arguments.  The first argument is the length of the world, and the second argument is the height of the world.  Optional flags can be added as well: '-i' requires user input in order to move to the next iteration; '-m' requires user input in order to do the next movement of either a creature or monster; and '-g' enables generational mode, in which creatures evolve and produce new generations.  Based on these inputs, a new world is instantiated, although no monsters are created yet. \\
 
-To determine the atomic weight of magnesium via its reaction with oxygen and to study the stoichiometry of the reaction (as defined in \ref{definitions}):
+\hspace{10 pt} After the world is instantiated, the program moves into the generations loop.  We repeat the following instructions 500 times: \\
 
-\begin{center}\ce{2 Mg + O2 -> 2 MgO}\end{center}
-
-% If you have more than one objective, uncomment the below:
-%\begin{description}
-%\item[First Objective] \hfill \\
-%Objective 1 text
-%\item[Second Objective] \hfill \\
-%Objective 2 text
-%\end{description}
-
-\subsection{Definitions}
-\label{definitions}
 \begin{description}
-\item[Stoichiometry]
-The relationship between the relative quantities of substances taking part in a reaction or forming a compound, typically a ratio of whole integers.
-\item[Atomic mass]
-The mass of an atom of a chemical element expressed in atomic mass units. It is approximately equivalent to the number of protons and neutrons in the atom (the mass number) or to the average number allowing for the relative abundances of different isotopes. 
-\end{description} 
+\item[Create a Generation]
+If there are no people in the world (this happens when everyone has died either by eating a mushroom or touching a monster), we skip most of this method and only increment the generation by 1.  Otherwise, we create a new generation based on the fitness of each person from the old one.  The person with the highest fitness in the wold generation automatically moves on.  Then, we repopulate the world using tournament selection.  We pick a subset of the old generation, and pick the person with the highest fitness from this generation to be one parent.  We repeat the process with the other parent.  Then, using the chromosome from each parent, we create a new person by picking genes from the two parents at random and passing them on.  A mutation is introduced at a random point with a 1/7 chance.  We repeat the process above until we have repopulated our world with people. (NOTE: THIS DOES NOT PICK PARENTS DESTRUCTIVELY. I MAY WANT TO INTRODUCE THIS).
+\item[Populate the World]
+After creating all the necessary people, we must add monsters, mushrooms, and strawberries to our world as well.  These are added to random spots in the world, and the amount varies based upon the size of the array.  People are added as well if creating a new generation did not create enough people.
+\item[Run Iterations]
+Now that our world is populated, we run an iteration, in which each person does an action and each monster does a movement if the iteration is divisible by 3.  First, a person must choose an action to do based on its surrounding state.  This is done by picking the best role (strawberry present, mushroom present, strawberry close, mushroom close, monster close, and person close) based on the weight of each role.  Out of all applicable roles, the role with the maximum weight is chosen, and it's action returned.  The person then executes the action returned.  If the action results in eating a strawberry, its energy will increase by 5; if it results in eating a mushroom, it dies; if it results in touching a monster, it dies as well.  Note that a person can be in the same square as a mushroom or strawberry and not eat it.  Each action that a person executes will decrease its energy level by 1- if it ends the turn with no energy, the person will die.  Next, monsters will do their turn if allowed.  They will only move towards the nearest person to them.
+\end{description}
+
  
 %----------------------------------------------------------------------------------------
 %	SECTION 2
 %----------------------------------------------------------------------------------------
 
-\section{Experimental Data}
+\section{Data}
 
-\begin{tabular}{ll}
-Mass of empty crucible & \SI{7.28}{\gram}\\
-Mass of crucible and magnesium before heating & \SI{8.59}{\gram}\\
-Mass of crucible and magnesium oxide after heating & \SI{9.46}{\gram}\\
-Balance used & \#4\\
-Magnesium from sample bottle & \#1
-\end{tabular}
+
 
 %----------------------------------------------------------------------------------------
 %	SECTION 3

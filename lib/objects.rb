@@ -461,7 +461,7 @@ class Person < Creature
       distance_south = Matrix.coord_euclidean_distance([@x_location, [@y_location + 1, @y_size - 1].min], target_coords)
 
       if current_distance >= [distance_east, distance_south, distance_west, distance_north].max
-        puts "cannot move further away from target"
+        # puts "cannot move further away from target"
       else
         used_movements = []
         good_movement = false
@@ -515,7 +515,7 @@ class Person < Creature
       elsif can_move_south(world_array) and Matrix.coord_euclidean_distance([@x_location, @y_location + 1], target_coords) < current_distance
         move_south(world_array)
       else
-        puts 'Cannot move closer to target'
+        # puts 'Cannot move closer to target'
       end
     else
       puts 'NO TARGET'
@@ -624,6 +624,10 @@ class Person < Creature
   # Returns the @ENERGY_LEVEL` of the creature.
   def get_energy_level
     @energy_level
+  end
+
+  def reset_energy_level
+    @energy_level = 25
   end
 
   # The string representation for the creature on the world array.

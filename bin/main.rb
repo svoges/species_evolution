@@ -35,14 +35,16 @@ elsif ARGV[0].to_i > 0 and ARGV[1].to_i > 0
 end
 world = World.new(ARGV[0].to_i, ARGV[1].to_i, manual_movement, manual_iteration)
 
+generations = true
 if generations
-  File.truncate('output/output.txt', 0)
+  File.truncate('output/average.txt', 0)
+  File.truncate('output/best.txt', 0)
   STDOUT.flush
   # while next_gen = STDIN.gets.chomp
   #   if next_gen == "quit" or next_gen == "exit"
   #     exit
   #   end`
-  while world.get_generation < 500
+  while world.get_generation < 150
     world.create_generation
     puts "======================#{world.get_generation}============================"
     world.populate
@@ -51,10 +53,11 @@ if generations
       world.do_iteration
       iterations -= 1
     end
-    world.write_average_fitness('output/output.txt')
-    puts "Average fitness after iterations: #{world.average_fitness}"
-    puts "Each person's fitness after iterations"
-    world.group_fitness
+    world.write_average_fitness('output/average.txt')
+    world.write_best_fitness('output/best.txt')
+    # puts "Average fitness after iterations: #{world.average_fitness}"
+    # puts "Each person's fitness after iterations"
+    # world.group_fitness
   end
   world.get_persons.each do |person|
     puts person.get_chromosome.get_sequence
