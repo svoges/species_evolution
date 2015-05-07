@@ -31,7 +31,7 @@ class World
     # The current iteration of the world.
     @iteration = 0
     # The amount of turns monsters have to wait in order to move.
-    @monster_iteration = 3
+    @monster_iteration = 2
     # The current generation of the world.
     @generation = 0
     # The total amount of people that start each generation.
@@ -83,7 +83,7 @@ class World
       while get_mushrooms.size < 5
         add_mushroom
       end
-    else
+    elsif @total_length <= 225
       @total_people = 20
       while get_persons.size < 20
         add_person
@@ -95,6 +95,20 @@ class World
         add_strawberry
       end
       while get_mushrooms.size < 5
+        add_mushroom
+      end
+    else
+      @total_people = 20
+      while get_persons.size < 50
+        add_person
+      end
+      while get_monsters.size < 10
+        add_monster
+      end
+      while get_strawberries.size < 50
+        add_strawberry
+      end
+      while get_mushrooms.size < 10
         add_mushroom
       end
     end
@@ -234,7 +248,7 @@ class World
       best_person = highest_fitness(old_persons)
       best_person.reset_energy_level
       @all_persons.push(best_person) unless best_person.nil?
-      while @all_persons.size < @total_people
+      while @all_persons.size < @total_people and !old_persons.empty?
         if old_persons.size >=6
           sample_one = old_persons.sample(old_persons.size / 6)
           sample_two = old_persons.sample(old_persons.size / 6)
@@ -275,7 +289,18 @@ class World
   # Write the average fitness of the generation to the OUTPUT_FILE.
   def write_best_fitness(output_file)
     open(output_file, 'a') { |f|
-      f.puts "#{@generation} #{highest_fitness(@all_persons).get_energy_level}\n"
+      if !@all_persons.empty?
+        f.puts "#{@generation} #{highest_fitness(@all_persons).get_energy_level}\n"
+      else
+        f.puts "#{@generation} 0\n"
+      end
+    }
+  end
+
+  # Write the average fitness of the generation to the OUTPUT_FILE.
+  def write_survivors(output_file)
+    open(output_file, 'a') { |f|
+      f.puts "#{@generation} #{@all_persons.size}\n"
     }
   end
 

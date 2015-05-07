@@ -42,11 +42,11 @@
 
 \begin{description}
 \item[Create a Generation]
-If there are no people in the world (this happens when everyone has died either by eating a mushroom or touching a monster), we skip most of this method and only increment the generation by 1.  Otherwise, we create a new generation based on the fitness of each person from the old one.  The person with the highest fitness in the wold generation automatically moves on.  Then, we repopulate the world using tournament selection.  We pick a subset of the old generation, and pick the person with the highest fitness from this generation to be one parent.  We repeat the process with the other parent.  Then, using the chromosome from each parent, we create a new person by picking genes from the two parents at random and passing them on.  A mutation is introduced at a random point with a 1/7 chance.  We repeat the process above until we have repopulated our world with people. (NOTE: THIS DOES NOT PICK PARENTS DESTRUCTIVELY. I MAY WANT TO INTRODUCE THIS).
+If there are no people in the world (this happens when everyone has died either by eating a mushroom or touching a monster), we skip most of this method and only increment the generation by 1.  Otherwise, we create a new generation based on the fitness of each person from the old one.  The person with the highest fitness in the wold generation automatically moves on.  Then, we repopulate the world using tournament selection.  We pick a subset of the old generation, and pick the person with the highest fitness from this generation to be one parent.  We repeat the process with the other parent.  Then, using the chromosome from each parent, we create a new person by picking genes from the two parents at random and passing them on.  A mutation is introduced at a random point with a 1/7 chance.  We repeat the process above until we have repopulated our world with people. Note: The process does not pick parents destructively.
 \item[Populate the World]
 After creating all the necessary people, we must add monsters, mushrooms, and strawberries to our world as well.  These are added to random spots in the world, and the amount varies based upon the size of the array.  People are added as well if creating a new generation did not create enough people.
 \item[Run Iterations]
-Now that our world is populated, we run an iteration, in which each person does an action and each monster does a movement if the iteration is divisible by 3.  First, a person must choose an action to do based on its surrounding state.  This is done by picking the best role (strawberry present, mushroom present, strawberry close, mushroom close, monster close, and person close) based on the weight of each role.  Out of all applicable roles, the role with the maximum weight is chosen, and it's action returned.  The person then executes the action returned.  If the action results in eating a strawberry, its energy will increase by 5; if it results in eating a mushroom, it dies; if it results in touching a monster, it dies as well.  Note that a person can be in the same square as a mushroom or strawberry and not eat it.  Each action that a person executes will decrease its energy level by 1- if it ends the turn with no energy, the person will die.  Next, monsters will do their turn if allowed.  They will only move towards the nearest person to them.
+Now that our world is populated, we run an iteration, in which each person does an action and each monster does a movement every second iteration.  First, a person must choose an action to do based on its surrounding state.  This is done by picking the best role (strawberry present, mushroom present, strawberry close, mushroom close, monster close, and person close) based on the weight of each role.  Out of all applicable roles, the role with the maximum weight is chosen, and it's action returned.  The person then executes the action returned.  If the action results in eating a strawberry, its energy will increase by 5; if it results in eating a mushroom, it dies; if it results in touching a monster, it dies as well.  Note that a person can be in the same square as a mushroom or strawberry and not eat it.  Each action that a person executes will decrease its energy level by 1- if it ends the turn with no energy, the person will die.  Next, monsters will do their turn if allowed.  They will only move towards the nearest person to them.
 \end{description}
 
  
@@ -56,80 +56,21 @@ Now that our world is populated, we run an iteration, in which each person does 
 
 \section{Data}
 
+\includegraphics[width=1.25\textwidth]{average_energy}
+\includegraphics[width=1\textwidth]{best_person}
+\includegraphics[width=1\textwidth]{survivors}
+
 
 
 %----------------------------------------------------------------------------------------
 %	SECTION 3
 %----------------------------------------------------------------------------------------
 
-\section{Sample Calculation}
+\section{Evolution's Effect}
 
-\begin{tabular}{ll}
-Mass of magnesium metal & = \SI{8.59}{\gram} - \SI{7.28}{\gram}\\
-& = \SI{1.31}{\gram}\\
-Mass of magnesium oxide & = \SI{9.46}{\gram} - \SI{7.28}{\gram}\\
-& = \SI{2.18}{\gram}\\
-Mass of oxygen & = \SI{2.18}{\gram} - \SI{1.31}{\gram}\\
-& = \SI{0.87}{\gram}
-\end{tabular}
-
-Because of this reaction, the required ratio is the atomic weight of magnesium: \SI{16.00}{\gram} of oxygen as experimental mass of Mg: experimental mass of oxygen or $\frac{x}{1.31}=\frac{16}{0.87}$ from which, $M_{\ce{Mg}} = 16.00 \times \frac{1.31}{0.87} = 24.1 = \SI{24}{\gram\per\mole}$ (to two significant figures).
-
-%----------------------------------------------------------------------------------------
-%	SECTION 4
-%----------------------------------------------------------------------------------------
-
-\section{Results and Conclusions}
-
-The atomic weight of magnesium is concluded to be \SI{24}{\gram\per\mol}, as determined by the stoichiometry of its chemical combination with oxygen. This result is in agreement with the accepted value.
-
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=0.65\textwidth]{placeholder} % Include the image placeholder.png
-\caption{Figure caption.}
-\end{center}
-\end{figure}
-
-%----------------------------------------------------------------------------------------
-%	SECTION 5
-%----------------------------------------------------------------------------------------
-
-\section{Discussion of Experimental Uncertainty}
-
-The accepted value (periodic table) is \SI{24.3}{\gram\per\mole} \cite{Smith:2012qr}. The percentage discrepancy between the accepted value and the result obtained here is 1.3\%. Because only a single measurement was made, it is not possible to calculate an estimated standard deviation.
-
-The most obvious source of experimental uncertainty is the limited precision of the balance. Other potential sources of experimental uncertainty are: the reaction might not be complete; if not enough time was allowed for total oxidation, less than complete oxidation of the magnesium might have, in part, reacted with nitrogen in the air (incorrect reaction); the magnesium oxide might have absorbed water from the air, and thus weigh ``too much." Because the result obtained is close to the accepted value it is possible that some of these experimental uncertainties have fortuitously cancelled one another.
-
-%----------------------------------------------------------------------------------------
-%	SECTION 6
-%----------------------------------------------------------------------------------------
-
-\section{Answers to Definitions}
-
-\begin{enumerate}
-\begin{item}
-The \emph{atomic weight of an element} is the relative weight of one of its atoms compared to C-12 with a weight of 12.0000000$\ldots$, hydrogen with a weight of 1.008, to oxygen with a weight of 16.00. Atomic weight is also the average weight of all the atoms of that element as they occur in nature.
-\end{item}
-\begin{item}
-The \emph{units of atomic weight} are two-fold, with an identical numerical value. They are g/mole of atoms (or just g/mol) or amu/atom.
-\end{item}
-\begin{item}
-\emph{Percentage discrepancy} between an accepted (literature) value and an experimental value is
-\begin{equation*}
-\frac{\mathrm{experimental\;result} - \mathrm{accepted\;result}}{\mathrm{accepted\;result}}
-\end{equation*}
-\end{item}
-\end{enumerate}
-
-%----------------------------------------------------------------------------------------
-%	BIBLIOGRAPHY
-%----------------------------------------------------------------------------------------
-
-\bibliographystyle{apalike}
-
-\bibliography{sample}
-
-%----------------------------------------------------------------------------------------
-
+\includegraphics[width=1.35\textwidth,height=1.35\textheight,keepaspectratio]{traits}
+Evolution
 
 \end{document}
+
+

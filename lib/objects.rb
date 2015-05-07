@@ -296,7 +296,7 @@ class Chromosome
 
   # Mutate the sequence with probability 1/7.
   def introduce_mutation
-    if rand(8) == 1
+    if rand(6) == 1
       return true
     else
       return false
@@ -359,7 +359,7 @@ class Person < Creature
     # The string representation of the person.
     @type = 'Person'
     # The energy level of the person.
-    @energy_level = 25
+    @energy_level = 20
     # The chromomome of the person dictating actions based on surroundings.
     @chromosome = Chromosome.new(chromosome_one, chromosome_two)
   end
@@ -397,7 +397,8 @@ class Person < Creature
     end
 
     if !all_objects["Strawberries"].empty?
-      if Matrix.euclidean_distance(self, nearest_strawberry(all_objects)) < 3
+      distance = Matrix.euclidean_distance(self, nearest_strawberry(all_objects))
+      if distance < 3 and distance != 0
         new_weight = @chromosome.get_nearest_strawb_weight
         if new_weight > max_weight
           max_weight = new_weight
@@ -407,7 +408,8 @@ class Person < Creature
     end
 
     if !all_objects["Mushrooms"].empty?
-      if Matrix.euclidean_distance(self, nearest_mushroom(all_objects)) < 3
+      distance = Matrix.euclidean_distance(self, nearest_mushroom(all_objects))
+      if distance < 3 and distance != 0
         new_weight = @chromosome.get_nearest_mush_weight
         if new_weight > max_weight
           max_weight = new_weight
