@@ -249,15 +249,20 @@ class World
       best_person.reset_energy_level
       @all_persons.push(best_person) unless best_person.nil?
       while @all_persons.size < @total_people and !old_persons.empty?
-        if old_persons.size >=6
-          sample_one = old_persons.sample(old_persons.size / 6)
-          sample_two = old_persons.sample(old_persons.size / 6)
+        if old_persons.size >= 5
+          sample_one = old_persons.sample(3)
+          sample_two = old_persons.sample(3)
         else
           sample_one = [old_persons.sample]
           sample_two = [old_persons.sample]
         end
         parent_one = highest_fitness(sample_one)
         parent_two = highest_fitness(sample_two)
+        old_persons.delete(parent_one)
+        old_persons.delete(parent_two)
+        coords = get_empty_coords
+        new_person = Person.new(coords[0], coords[1], @x_size, @y_size, parent_one.get_chromosome, parent_two.get_chromosome)
+        @all_persons.push(new_person)
         coords = get_empty_coords
         new_person = Person.new(coords[0], coords[1], @x_size, @y_size, parent_one.get_chromosome, parent_two.get_chromosome)
         @all_persons.push(new_person)
