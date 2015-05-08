@@ -98,7 +98,7 @@ class World
         add_mushroom
       end
     else
-      @total_people = 20
+      @total_people = 50
       while get_persons.size < 50
         add_person
       end
@@ -249,23 +249,25 @@ class World
       best_person.reset_energy_level
       @all_persons.push(best_person) unless best_person.nil?
       while @all_persons.size < @total_people and !old_persons.empty?
-        if old_persons.size >= 5
-          sample_one = old_persons.sample(3)
-          sample_two = old_persons.sample(3)
+        if old_persons.size >= 10
+          sample_size = 10
+        elsif old_persons.size >= 5
+          sample_size = 5
         else
-          sample_one = [old_persons.sample]
-          sample_two = [old_persons.sample]
+          sample_size = 3
         end
+        sample_one = old_persons.sample(sample_size)
+        sample_two = old_persons.sample(sample_size)
+
         parent_one = highest_fitness(sample_one)
         parent_two = highest_fitness(sample_two)
-        old_persons.delete(parent_one)
-        old_persons.delete(parent_two)
-        coords = get_empty_coords
-        new_person = Person.new(coords[0], coords[1], @x_size, @y_size, parent_one.get_chromosome, parent_two.get_chromosome)
-        @all_persons.push(new_person)
-        coords = get_empty_coords
-        new_person = Person.new(coords[0], coords[1], @x_size, @y_size, parent_one.get_chromosome, parent_two.get_chromosome)
-        @all_persons.push(new_person)
+
+        # old_persons.delete_if { |x| x == parent_one or x == parent_two }
+        (0..1).each do
+          coords = get_empty_coords
+          new_person = Person.new(coords[0], coords[1], @x_size, @y_size, parent_one.get_chromosome, parent_two.get_chromosome)
+          @all_persons.push(new_person)
+        end
       end
     end
     @generation += 1

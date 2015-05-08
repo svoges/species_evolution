@@ -42,7 +42,7 @@
 
 \begin{description}
 \item[Create a Generation]
-If there are no people in the world (this happens when everyone has died either by eating a mushroom or touching a monster), we skip most of this method and only increment the generation by 1.  Otherwise, we create a new generation based on the fitness of each person from the old one.  The person with the highest fitness in the wold generation automatically moves on.  Then, we repopulate the world using tournament selection.  We pick a subset of the old generation, and pick the person with the highest fitness from this generation to be one parent.  We repeat the process with the other parent.  Then, using the chromosome from each parent, we create a new person by picking genes from the two parents at random and passing them on.  A mutation is introduced at a random point with a 1/7 chance.  We repeat the process above until we have repopulated our world with people. Note: The process does not pick parents destructively.
+If there are no people in the world (this happens when everyone has died either by eating a mushroom or touching a monster), we skip most of this method and only increment the generation by 1.  Otherwise, we create a new generation based on the fitness of each person from the old one.  The person with the highest fitness in the wold generation automatically moves on.  Then, we repopulate the world using tournament selection.  We pick a subset of the old generation, and pick the person with the highest fitness from this generation to be one parent.  We repeat the process with the other parent.  Then, using the chromosome from each parent, we create two new people by picking genes from the two parents at random and passing them on.  A mutation is introduced at a random point with a 1/7 chance.  We repeat the process above until we have repopulated our world with people. Note: I picked people both destructively and non-destructively, and explained the results below.
 \item[Populate the World]
 After creating all the necessary people, we must add monsters, mushrooms, and strawberries to our world as well.  These are added to random spots in the world, and the amount varies based upon the size of the array.  People are added as well if creating a new generation did not create enough people.
 \item[Run Iterations]
@@ -56,10 +56,23 @@ Now that our world is populated, we run an iteration, in which each person does 
 
 \section{Data}
 
-\includegraphics[width=1.25\textwidth]{average_energy}
-\includegraphics[width=1\textwidth]{best_person}
-\includegraphics[width=1\textwidth]{survivors}
+The following data is run on a 15 by 15 grid populated with 20 people, 20 strawberries, 5 monsters and 5 mushrooms.  Evolution is non-destructive, meaning that once two parents are selected they are not removed from the set of possible parents.
 
+\includegraphics[width=1.25\textwidth]{15average_energy}
+\includegraphics[width=1\textwidth]{15best_person}
+\includegraphics[width=1\textwidth]{15survivors}
+
+The following data is run on a 40 by 40 grid populated with 50 people, 50 strawberries, 10 monsters and 10 mushrooms.  Evolution is non-destructive as well.  In the two cases below, creatures were initialized with 20 units of energy, but still had to go through 25 iterations, meaning they had to pick up at least 1 strawberry.
+
+\includegraphics[width=1.25\textwidth]{40non_avg_energy}
+\includegraphics[width=1\textwidth]{40non_best}
+\includegraphics[width=1\textwidth]{40non_survivors}
+
+The following data is run on a 40 by 40 grid populated with 50 people, 50 strawberries, 10 monsters and 10 mushrooms.  Evolution is destructive in this case, meaning that once parents are selected, they create two children and are then deleted from the set of possible parents.
+
+\includegraphics[width=1.25\textwidth]{40des_avg_energy}
+\includegraphics[width=1\textwidth]{40des_best}
+\includegraphics[width=1\textwidth]{40des_survivors}
 
 
 %----------------------------------------------------------------------------------------
@@ -68,10 +81,14 @@ Now that our world is populated, we run an iteration, in which each person does 
 
 \section{Evolution's Effect and General Notes}
 
-\includegraphics[width=1.35\textwidth,height=1.35\textheight,keepaspectratio]{traits}
-Evolution
+\includegraphics[width=1.35\textwidth,height=1.35\textheight,keepaspectratio]{15traits}\\ \\ \\ 
+\includegraphics[width=1.35\textwidth,height=1.35\textheight,keepaspectratio]{40non_traits} \\ \\ \\
+\includegraphics[width=1.35\textwidth,height=1.35\textheight,keepaspectratio]{40des_traits}
+\\ \\ \\ 
 
-It seems that non-destructive tournament selection returns a much higher survival rate with better genomes.
+It seems that non-destructive tournament selection returns a much higher survival rate with better genomes than destructive tournament selection (the third traits picture).  With non-destructive evolution, creatures tended to move towards having very similar chromosomes.  This happened mostly from some sort of bottle-neck effect, where if only 1 or 2 creatures were left, a very high portion of the next generation would be left with extremely similar genomes.  On the other hands, if only 1 or 2 creatures were left with destructive evolution, they would pass their genes on and a new batch of people with random chromosomes would populate the rest of the world.  Although non-destructive evolution had creatures with a higher survival rate and more energy, the destructive evolution returned generations with more variety, which could help in some unforeseen circumstance. \\ 
+
+In general, after evolving for 500 generations, creatures tended to have higher weights on eating and moving towards strawberries, ignoring and moving away from mushrooms, ignoring and moving away from creatures, and a random selection of roles and weights for people (these didn't tend to matter since moving towards people didn't yield any benefits or costs).  
 
 \end{document}
 

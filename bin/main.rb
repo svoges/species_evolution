@@ -45,7 +45,7 @@ if generations
   #   if next_gen == "quit" or next_gen == "exit"
   #     exit
   #   end`
-  while world.get_generation < 100
+  while world.get_generation < 500
     world.create_generation
     if world.get_generation % 1 == 0
       puts "======================#{world.get_generation}============================"
