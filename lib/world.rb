@@ -262,7 +262,7 @@ class World
         parent_one = highest_fitness(sample_one)
         parent_two = highest_fitness(sample_two)
 
-        # old_persons.delete_if { |x| x == parent_one or x == parent_two }
+        old_persons.delete_if { |x| x == parent_one or x == parent_two }
         (0..1).each do
           coords = get_empty_coords
           new_person = Person.new(coords[0], coords[1], @x_size, @y_size, parent_one.get_chromosome, parent_two.get_chromosome)
