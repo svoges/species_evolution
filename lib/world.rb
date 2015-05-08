@@ -9,6 +9,9 @@ class World
     @manual_movement = manual_movement
     @manual_iteration = manual_iteration
     @printing = printing
+    if manual_iteration or manual_movement
+      @printing = true
+    end
     # The length of the world.
     @x_size = x_size
     # the height of the world.
@@ -151,6 +154,7 @@ class World
 
       if person.get_energy_level <= 0
         persons_to_delete.push(person)
+        puts "#{person} dies from running out of energy" if @printing
       end
 
       present_objects = get_objects_at_coord(person.get_x_location, person.get_y_location)
@@ -514,5 +518,10 @@ class World
   # Returns an array containing all persons in the world.
   def get_persons
     @all_persons
+  end
+
+  def enable_manual_iteration
+    @manual_iteration = true
+    @printing = true
   end
 end
