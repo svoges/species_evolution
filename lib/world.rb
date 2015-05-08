@@ -5,15 +5,10 @@ class World
   # MANUAL_MOVEMENT, the program will iterate through each person's movement.
   # If MANUAL_ITERATION, the program will iterate manually through each
   # iteration.
-  def initialize(x_size, y_size, manual_movement, manual_iteration)
+  def initialize(x_size, y_size, printing, manual_movement, manual_iteration)
     @manual_movement = manual_movement
-    if @manual_movement
-      puts "MANUAL MOVEMENT ENABLED"
-    end
     @manual_iteration = manual_iteration
-    if @manual_iteration
-      puts "MANUAL ITERATION ENABLED"
-    end
+    @printing = printing
     # The length of the world.
     @x_size = x_size
     # the height of the world.
@@ -42,83 +37,39 @@ class World
   # the world afterwards.
   def populate
     if @total_length <= 25
-      @total_people = 3
-      while get_persons.size < 3
-        add_person
-      end
-      while get_monsters.size < 2
-        add_monster
-      end
-      while get_strawberries.size < 3
-        add_strawberry
-      end
-      while get_mushrooms.size < 2
-        add_mushroom
-      end
+      @total_people, total_strawberries = 3, 3
+      total_monsters, total_mushrooms = 2, 2
     elsif @total_length <= 50
-      @total_people = 6
-      while get_persons.size < 6
-        add_person
-      end
-      while get_monsters.size < 3
-        add_monster
-      end
-      while get_strawberries.size < 5
-        add_strawberry
-      end
-      while get_mushrooms.size < 3
-        add_mushroom
-      end
+      @total_people, total_strawberries = 6, 6
+      total_monsters, total_mushrooms = 3, 3
     elsif @total_length <= 100
-      @total_people = 9
-      while get_persons.size < 9
-        add_person
-      end
-      while get_monsters.size < 5
-        add_monster
-      end
-      while get_strawberries.size < 16
-        add_strawberry
-      end
-      while get_mushrooms.size < 5
-        add_mushroom
-      end
+      @total_people, total_strawberries = 9, 9
+      total_monsters, total_mushrooms = 5, 5
     elsif @total_length <= 225
-      @total_people = 20
-      while get_persons.size < 20
-        add_person
-      end
-      while get_monsters.size < 5
-        add_monster
-      end
-      while get_strawberries.size < 20
-        add_strawberry
-      end
-      while get_mushrooms.size < 5
-        add_mushroom
-      end
+      @total_people, total_strawberries = 20, 20
+      total_monsters, total_mushrooms = 7, 7
     else
-      @total_people = 50
-      while get_persons.size < 50
-        add_person
-      end
-      while get_monsters.size < 10
-        add_monster
-      end
-      while get_strawberries.size < 50
-        add_strawberry
-      end
-      while get_mushrooms.size < 10
-        add_mushroom
-      end
+      @total_people, total_strawberries = 50, 50
+      total_monsters, total_mushrooms = 10, 10
     end
-    # display_world
+
+    while get_persons.size < @total_people
+      add_person
+    end
+    while get_monsters.size < total_monsters
+      add_monster
+    end
+    while get_strawberries.size < total_strawberries
+      add_strawberry
+    end
+    while get_mushrooms.size < total_mushrooms
+      add_mushroom
+    end
   end
 
   # Main method controlling each iteration of the world.  People will move each
   # turn, and monsters will move after @MONSTER_ITERATION turns.
   def do_iteration
-    # puts "--------#{@iteration}--------"
     @iteration += 1
     if @manual_iteration
       do_manual
@@ -140,7 +91,7 @@ class World
               if food.get_amount <= 0
                 @all_strawberries.delete(food)
               end
-              # puts "#{person} eats strawberry on square (#{person.get_x_location}, #{person.get_y_location})"
+              puts "#{person} eats strawberry on square (#{person.get_x_location}, #{person.get_y_location})" if @printing
             elsif food.class == Mushroom
               persons_to_delete.push(person)
               food.decrement
@@ -148,9 +99,10 @@ class World
               if food.get_amount <= 0
                 @all_mushrooms.delete(food)
               end
-              # puts "#{person} eats mushroom on square (#{person.get_x_location}, #{person.get_y_location})"
+              puts "#{person} eats mushroom on square (#{person.get_x_location}, #{person.get_y_location})" if @printing
             else
               puts "cannot eat #{food.class}"
+              exit
             end
           end
         end
@@ -171,6 +123,7 @@ class World
           person.move_towards(get_world_array, creature)
         else
           puts "invalid action: #{action}"
+          exit
         end
       elsif action[1] == 'away_from'
         if action[0] == 3
@@ -187,11 +140,13 @@ class World
           person.away_from(get_world_array, creature)
         else
           puts "invalid action: #{action}"
+          exit
         end
       elsif action[1] == 'random'
         person.move_random(get_world_array)
       else
         puts "#{action} not a valid action"
+        exit
       end
 
       if person.get_energy_level <= 0
@@ -202,7 +157,7 @@ class World
       present_objects.each do |object|
         if object.class == Monster
           persons_to_delete.push(person)
-          # puts "#{person} moves to monster on square (#{person.get_x_location}, #{person.get_y_location})"
+          puts "#{person} moves to monster on square (#{person.get_x_location}, #{person.get_y_location})" if @printing
         end
       end
     end
@@ -226,7 +181,7 @@ class World
                 # do nothing
               elsif object.class == Person
                 @all_persons.delete(object)
-                # puts "Monster eats #{object} on square (#{monster.get_x_location}, #{monster.get_y_location})"
+                puts "Monster eats #{object} on square (#{monster.get_x_location}, #{monster.get_y_location})" if @printing
               else
                 puts 'UNIDENTIFIED MONSTER OBJECT'
                 exit
@@ -236,7 +191,7 @@ class World
         end
       end
     end
-    # display_world
+    display_world if @printing
   end
 
   # Creates a generation of set size of initial input using tournament
@@ -284,6 +239,24 @@ class World
       end
     end
     best_person
+  end
+
+  # Write all necessary information to output files.
+  def generate_output
+    write_average_fitness('output/average.txt')
+    write_best_fitness('output/best.txt')
+    write_survivors('output/survivors.txt')
+    write_traits('output/traits.txt')
+  end
+
+  # Write the traits of each person to OUTPUT_FILE.
+  def write_traits(output_file)
+    open(output_file, 'a') { |f|
+      f.puts "=========#{@generation}========"
+      @all_persons.each do |person|
+        f.puts "#{person.get_chromosome.get_sequence}"
+      end
+    }
   end
 
   # Write the average fitness of the generation to the OUTPUT_FILE.
