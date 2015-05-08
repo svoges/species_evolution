@@ -31,7 +31,7 @@ class World
     # The current iteration of the world.
     @iteration = 0
     # The amount of turns monsters have to wait in order to move.
-    @monster_iteration = 3
+    @monster_iteration = 2
     # The current generation of the world.
     @generation = 0
     # The total amount of people that start each generation.
@@ -83,7 +83,7 @@ class World
       while get_mushrooms.size < 5
         add_mushroom
       end
-    else
+    elsif @total_length <= 225
       @total_people = 20
       while get_persons.size < 20
         add_person
@@ -95,6 +95,20 @@ class World
         add_strawberry
       end
       while get_mushrooms.size < 5
+        add_mushroom
+      end
+    else
+      @total_people = 50
+      while get_persons.size < 50
+        add_person
+      end
+      while get_monsters.size < 10
+        add_monster
+      end
+      while get_strawberries.size < 50
+        add_strawberry
+      end
+      while get_mushrooms.size < 10
         add_mushroom
       end
     end
@@ -234,19 +248,26 @@ class World
       best_person = highest_fitness(old_persons)
       best_person.reset_energy_level
       @all_persons.push(best_person) unless best_person.nil?
-      while @all_persons.size < @total_people
-        if old_persons.size >=6
-          sample_one = old_persons.sample(old_persons.size / 6)
-          sample_two = old_persons.sample(old_persons.size / 6)
+      while @all_persons.size < @total_people and !old_persons.empty?
+        if old_persons.size >= 10
+          sample_size = 10
+        elsif old_persons.size >= 5
+          sample_size = 5
         else
-          sample_one = [old_persons.sample]
-          sample_two = [old_persons.sample]
+          sample_size = 3
         end
+        sample_one = old_persons.sample(sample_size)
+        sample_two = old_persons.sample(sample_size)
+
         parent_one = highest_fitness(sample_one)
         parent_two = highest_fitness(sample_two)
-        coords = get_empty_coords
-        new_person = Person.new(coords[0], coords[1], @x_size, @y_size, parent_one.get_chromosome, parent_two.get_chromosome)
-        @all_persons.push(new_person)
+
+        old_persons.delete_if { |x| x == parent_one or x == parent_two }
+        (0..1).each do
+          coords = get_empty_coords
+          new_person = Person.new(coords[0], coords[1], @x_size, @y_size, parent_one.get_chromosome, parent_two.get_chromosome)
+          @all_persons.push(new_person)
+        end
       end
     end
     @generation += 1
@@ -275,7 +296,18 @@ class World
   # Write the average fitness of the generation to the OUTPUT_FILE.
   def write_best_fitness(output_file)
     open(output_file, 'a') { |f|
-      f.puts "#{@generation} #{highest_fitness(@all_persons).get_energy_level}\n"
+      if !@all_persons.empty?
+        f.puts "#{@generation} #{highest_fitness(@all_persons).get_energy_level}\n"
+      else
+        f.puts "#{@generation} 0\n"
+      end
+    }
+  end
+
+  # Write the average fitness of the generation to the OUTPUT_FILE.
+  def write_survivors(output_file)
+    open(output_file, 'a') { |f|
+      f.puts "#{@generation} #{@all_persons.size}\n"
     }
   end
 

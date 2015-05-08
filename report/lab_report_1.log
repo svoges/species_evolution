@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  7 MAY 2015 11:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  8 MAY 2015 19:47
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -579,50 +579,174 @@ Underfull \hbox (badness 10000) in paragraph at lines 41--42
 [1
 
 {/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-<placeholder.jpg, id=12, 351.3125pt x 193.72375pt>
-File: placeholder.jpg Graphic file (type jpg)
- <use placeholder.jpg>
-Package pdftex.def Info: placeholder.jpg used on input line 88.
-(pdftex.def)             Requested size: 224.2479pt x 123.66057pt.
+<15average_energy.jpg, id=12, 644.4075pt x 483.8075pt>
+File: 15average_energy.jpg Graphic file (type jpg)
 
+<use 15average_energy.jpg>
+Package pdftex.def Info: 15average_energy.jpg used on input line 61.
+(pdftex.def)             Requested size: 431.25pt x 323.78761pt.
 
-LaTeX Warning: `h' float specifier changed to `ht'.
+<15best_person.png, id=13, 641.39626pt x 483.8075pt>
+File: 15best_person.png Graphic file (type png)
+ <use 15best_person.png>
+Package pdftex.def Info: 15best_person.png used on input line 62.
+(pdftex.def)             Requested size: 345.0pt x 260.24078pt.
 
+<15survivors.png, id=14, 642.4pt x 481.8pt>
+File: 15survivors.png Graphic file (type png)
+ <use 15survivors.png>
+Package pdftex.def Info: 15survivors.png used on input line 63.
+(pdftex.def)             Requested size: 345.0pt x 258.75659pt.
 
-Package natbib Warning: Citation `Smith:2012qr' on page 2 undefined on input li
-ne 99.
+Overfull \hbox (86.25pt too wide) in paragraph at lines 61--64
+[][]
+ []
 
 [2]
-No file lab_report_1.bbl.
+Overfull \vbox (35.0284pt too high) has occurred while \output is active []
 
-Package natbib Warning: There were undefined citations.
 
-[3 <./placeholder.jpg>] (./lab_report_1.aux) ) 
+[3 <./15average_energy.jpg> <./15best_person.png>]
+<40non_avg_energy.png, id=21, 781.92125pt x 461.725pt>
+File: 40non_avg_energy.png Graphic file (type png)
+
+<use 40non_avg_energy.png>
+Package pdftex.def Info: 40non_avg_energy.png used on input line 67.
+(pdftex.def)             Requested size: 431.25pt x 254.65407pt.
+ <40non_best.png, id=22, 866.23625pt x 451.6875pt>
+File: 40non_best.png Graphic file (type png)
+
+<use 40non_best.png>
+Package pdftex.def Info: 40non_best.png used on input line 68.
+(pdftex.def)             Requested size: 345.0pt x 179.89297pt.
+ <40non_survivors.png, id=23, 779.91376pt x 455.7025pt>
+File: 40non_survivors.png Graphic file (type png)
+
+<use 40non_survivors.png>
+Package pdftex.def Info: 40non_survivors.png used on input line 69.
+(pdftex.def)             Requested size: 345.0pt x 201.58054pt.
+
+Overfull \hbox (86.25pt too wide) in paragraph at lines 67--70
+[][]
+ []
+
+[4 <./15survivors.png>] [5 <./40non_avg_energy.png> <./40non_best.png>]
+<40des_avg_energy.png, id=30, 960.58875pt x 450.68375pt>
+File: 40des_avg_energy.png Graphic file (type png)
+
+<use 40des_avg_energy.png>
+Package pdftex.def Info: 40des_avg_energy.png used on input line 73.
+(pdftex.def)             Requested size: 431.25pt x 202.3313pt.
+ <40des_best.png, id=31, 997.7275pt x 452.69125pt>
+File: 40des_best.png Graphic file (type png)
+
+<use 40des_best.png>
+Package pdftex.def Info: 40des_best.png used on input line 74.
+(pdftex.def)             Requested size: 345.0pt x 156.53093pt.
+ <40des_survivors.png, id=32, 1058.95625pt x 457.71pt>
+File: 40des_survivors.png Graphic file (type png)
+
+<use 40des_survivors.png>
+Package pdftex.def Info: 40des_survivors.png used on input line 75.
+(pdftex.def)             Requested size: 345.0pt x 149.11716pt.
+
+Overfull \hbox (86.25pt too wide) in paragraph at lines 73--76
+[][]
+ []
+
+[6 <./40non_survivors.png> <./40des_avg_energy.png>]
+<15traits.png, id=36, 861.2175pt x 286.06876pt>
+File: 15traits.png Graphic file (type png)
+ <use 15traits.png>
+Package pdftex.def Info: 15traits.png used on input line 84.
+(pdftex.def)             Requested size: 465.76015pt x 154.71054pt.
+
+<40non_traits.png, id=37, 854.19125pt x 418.56375pt>
+File: 40non_traits.png Graphic file (type png)
+ <use 40non_traits.png>
+Package pdftex.def Info: 40non_traits.png used on input line 85.
+(pdftex.def)             Requested size: 465.74007pt x 228.2181pt.
+
+<40des_traits.png, id=38, 865.2325pt x 268.00125pt>
+File: 40des_traits.png Graphic file (type png)
+ <use 40des_traits.png>
+Package pdftex.def Info: 40des_traits.png used on input line 86.
+(pdftex.def)             Requested size: 465.75313pt x 144.26459pt.
+
+Overfull \hbox (120.76015pt too wide) in paragraph at lines 84--88
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 84--88
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 84--88
+
+ []
+
+
+Overfull \hbox (120.74007pt too wide) in paragraph at lines 84--88
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 84--88
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 84--88
+
+ []
+
+
+Overfull \hbox (120.75313pt too wide) in paragraph at lines 84--88
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 84--88
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 84--88
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 84--88
+
+ []
+
+[7 <./40des_best.png> <./40des_survivors.png> <./15traits.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 89--90
+
+ []
+
+[8 <./40non_traits.png> <./40des_traits.png>] [9] (./lab_report_1.aux) ) 
 Here is how much of TeX's memory you used:
- 10719 strings out of 493117
- 227668 string characters out of 6135433
- 254124 words of memory out of 5000000
- 14104 multiletter control sequences out of 15000+600000
- 12184 words of font info for 46 fonts, out of 8000000 for 9000
+ 10767 strings out of 493117
+ 228744 string characters out of 6135433
+ 252124 words of memory out of 5000000
+ 14143 multiletter control sequences out of 15000+600000
+ 11838 words of font info for 45 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,13n,35p,10415b,812s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2014/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2014/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2014/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2014/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2014/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2014/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2014/texmf-dist/font
-s/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2014/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2014/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmti10.pfb>
-Output written on lab_report_1.pdf (3 pages, 154585 bytes).
+ 38i,6n,35p,10415b,378s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/l
+ocal/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/lo
+cal/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/loc
+al/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/loc
+al/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local
+/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/t
+exlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
+Output written on lab_report_1.pdf (9 pages, 1391698 bytes).
 PDF statistics:
- 63 PDF objects out of 1000 (max. 8388607)
- 44 compressed objects within 1 object stream
+ 70 PDF objects out of 1000 (max. 8388607)
+ 40 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 61 words of extra memory for PDF output out of 10000 (max. 10000000)
 

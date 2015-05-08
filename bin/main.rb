@@ -39,29 +39,33 @@ generations = true
 if generations
   File.truncate('output/average.txt', 0)
   File.truncate('output/best.txt', 0)
+  File.truncate('output/survivors.txt', 0)
   STDOUT.flush
   # while next_gen = STDIN.gets.chomp
   #   if next_gen == "quit" or next_gen == "exit"
   #     exit
   #   end`
-  while world.get_generation < 150
+  while world.get_generation < 200
     world.create_generation
-    puts "======================#{world.get_generation}============================"
+    if world.get_generation % 1 == 0
+      puts "======================#{world.get_generation}============================"
+    end
     world.populate
-    iterations = 20
+    iterations = 25
     while iterations > 0
       world.do_iteration
       iterations -= 1
     end
     world.write_average_fitness('output/average.txt')
     world.write_best_fitness('output/best.txt')
+    world.write_survivors('output/survivors.txt')
     # puts "Average fitness after iterations: #{world.average_fitness}"
     # puts "Each person's fitness after iterations"
-    # world.group_fitness
   end
   world.get_persons.each do |person|
     puts person.get_chromosome.get_sequence
   end
+  world.group_fitness
 else
   # Create creatures
   world.populate
