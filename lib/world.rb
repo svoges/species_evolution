@@ -195,7 +195,7 @@ class World
         end
       end
     end
-    display_world if @printing
+    display_world if @printing and !@manual_iteration
   end
 
   # Creates a generation of set size of initial input using tournament

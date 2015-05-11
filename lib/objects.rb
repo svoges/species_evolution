@@ -398,7 +398,7 @@ class Person < Creature
 
     if !all_objects["Strawberries"].empty?
       distance = Matrix.euclidean_distance(self, nearest_strawberry(all_objects))
-      if distance < 3 and distance != 0
+      if distance < 5 and distance != 0
         new_weight = @chromosome.get_nearest_strawb_weight
         if new_weight > max_weight
           max_weight = new_weight
@@ -419,7 +419,7 @@ class Person < Creature
     end
 
     if !all_objects["Monsters"].empty?
-      if Matrix.euclidean_distance(self, nearest_monster(all_objects)) < 3
+      if Matrix.euclidean_distance(self, nearest_monster(all_objects)) < 5
         new_weight = @chromosome.get_nearest_monster_weight
         if new_weight > max_weight
           max_weight = new_weight
