@@ -51,9 +51,12 @@ class World
     elsif @total_length <= 225
       @total_people, total_strawberries = 20, 20
       total_monsters, total_mushrooms = 7, 7
-    else
+    elsif @total_length <= 1600
       @total_people, total_strawberries = 50, 50
       total_monsters, total_mushrooms = 10, 10
+    else
+      @total_people, total_strawberries = 300, 300
+      total_monsters, total_mushrooms = 50, 50
     end
 
     while get_persons.size < @total_people

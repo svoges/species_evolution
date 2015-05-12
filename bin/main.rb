@@ -65,7 +65,7 @@ if generations
   File.truncate('output/best.txt', 0)
   File.truncate('output/survivors.txt', 0)
   STDOUT.flush
-  while world.get_generation < 200
+  while world.get_generation < 2000
     world.create_generation
     puts "======================#{world.get_generation}============================"
     world.populate
